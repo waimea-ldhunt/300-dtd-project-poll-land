@@ -1,7 +1,6 @@
-title: Flask Project Template
-description: A starter Flask, Jinja and SQLite project
-author: Digital Technologies Dept.
+title: Poll Land Project
+description: A system for creating anonymous large scale polls
+author: Lachlan Hunt
 
-# If development is true, guides will be shown
 development: true
 picotheme: azure
