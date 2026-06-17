@@ -13,6 +13,8 @@ The app has the following key features:
 
 ## Supporting Documents
 
+All documentation is hosted on [Github Pages](https://waimea-ldhunt.github.io/300-dtd-project-poll-land/)
+
 Task Instructions:
 - [Instruction documents](docs/instructions/)
 
