@@ -2,22 +2,44 @@
 
 ## Identified Problem or Need
 
-Replace this text with a clearly stated problem or need that exists that your project will attempt to solve / fulfil.
-
+Large scale polling/surveying is difficult and requires a lot of effort to collect the desired data. There are no central services for managaging large scale polls.
 
 ## End-User Requirements
 
-Replace this text with a description of your typical end-users and their specific needs / expectations / requirements.
+Creators need to be able to easily create and manage polls, and be able to send them out to a large randomised group of users (Or everyone).
 
+Users need to be able to see the polls they are participating in, and be able to vote and comment on them.
 
 ## Proposed Solution
 
-Replace this text with a brief statement about the system that you intend to create, including the key functionality it should have.
+An application for large scale polls across a widespread community, with functionality including:
+ - User Accounts, (Participant, Creator and Admin)
+ - Creators can create new public or private polls, (if private can specify participant group)
+ - Creators can see an analysis breakdown of their poll results and participants.
+ - Participants can vote/comment on public polls.
+ - Participants have a 'feed' for private polls they are invited to where they can vote/comment.
 
 
 # Relevant Implications
 
-## NAME OF IMPLICATION 1
+## ACCESSIBILTY
+
+Accesssibility is important because it means the system can be used by all users reardless of ability, experience or disability, the system should be able to be used by everyone in a wide range of different scenarios such as on a mobile devices/various screen sizes or with limited control/navigation options (e.g. keyboard only). The UI design should also be high contrast so it can be easily read by those with limited vision.
+
+### Relevance to the System
+
+
+
+### Impact / Considerations
+
+My system should ensure that as many users as possible are able to utilize the system with ease and efficiency, I will do this by making sure that:
+ - The system works well on all devices
+ - Every element is accessible without a mouse and has the correct tags
+ - The UI is well contrasted
+ - All 
+
+
+## PRIVACY
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -30,22 +52,7 @@ Replace this text with an explanation of why the implication is relevant to this
 Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
 
 
-
-## NAME OF IMPLICATION 2
-
-Replace this text with a clear explanation of what the implication means.
-
-### Relevance to the System
-
-Replace this text with an explanation of why the implication is relevant to this particular project.
-
-### Impact / Considerations
-
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
-
-
-## NAME OF IMPLICATION 3
+## END-USER
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -58,8 +65,20 @@ Replace this text with an explanation of why the implication is relevant to this
 Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
 
 
+## FUNCTIONALITY
 
-## NAME OF IMPLICATION 4
+Works
+
+### Relevance to the System
+
+Replace this text with an explanation of why the implication is relevant to this particular project.
+
+### Impact / Considerations
+
+Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+
+
+## USABILITY
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -70,21 +89,6 @@ Replace this text with an explanation of why the implication is relevant to this
 ### Impact / Considerations
 
 Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
-
-
-## NAME OF IMPLICATION 5
-
-Replace this text with a clear explanation of what the implication means.
-
-### Relevance to the System
-
-Replace this text with an explanation of why the implication is relevant to this particular project.
-
-### Impact / Considerations
-
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
 
 
 # User Experience (UX) Principles
