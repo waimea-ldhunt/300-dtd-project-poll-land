@@ -41,20 +41,23 @@ My system should ensure that as many users as possible are able to utilize the s
 
 ## PRIVACY
 
-Replace this text with a clear explanation of what the implication means.
+Privacy is important because it means that user data is protected and stored securely making sure that no one other than the user can access that data, it also means that the system does not freely share private data.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+Because my system collects user data such as accounds and more specifically user passwords I need to consider the privacy implications of my system, otherwise if I do not the privacy of my users will be jepoardised. My users also need to be clearly informed and consent to any collection of data my system might need, but my system must not collect unnesicary personal data.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+My system should ensure that all collected data is secured and not shared, I will do this by making sure that:
+ - All user data collected is important for the system
+ - Private data is stored securely in the database
+ - Users are informed about data collection
+ - Only the user themselves can access their data
 
 ## END-USER
 
-Replace this text with a clear explanation of what the implication means.
+End-user considerations are important because they mean that the system functions as desired for the users and includes features that the target end-users would expect, another consideration is the target end-users, the system should be appealing to them and .
 
 ### Relevance to the System
 
