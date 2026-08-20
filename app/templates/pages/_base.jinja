@@ -26,13 +26,25 @@
 
     <header>
         <a href="/">
-            Notes Demo
+            Pollland
         </a>
 
         <nav>
-            <a href="/">All Notes</a>
-            <a href="/">Link</a>
-            <a href="/">Link</a>
+            <a href="/">Home</a>
+            {% if session.logged_in %}
+                <a href="/">Profile</a>
+                <a href="/">Polls</a>
+                <a href="/logout">Log Out</a>
+                {% if session.user.is_creator == 1 %}
+                    <p>{{session.user.username}} [Creator]</p>
+                {% elif session.user.is_admin == 1 %}
+                    <p>{{session.user.username}} [Admin]</p>
+                {% else %}
+                    <p>{{session.user.username}}</p>
+                {% endif %}
+            {% else %}
+                <a href="/login">Log In</a
+            {% endif %}
         </nav>
     </header>
 
@@ -49,4 +61,3 @@
 </body>
 
 </html>
-

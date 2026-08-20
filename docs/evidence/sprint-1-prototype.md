@@ -67,7 +67,7 @@ Votes will be organised for viewing and a graph or chart will be generated to sh
 
 I created a very minimal site example to test how the website will 'flow' between pages and actions.
 
-[UI Flow Version 1](https://design.penpot.app/#/view?file-id=f0485fb1-4e63-8165-8008-3908c56b0abb&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&index=0&share-id=bd31e32d-d69f-81e2-8008-638bafe70da5)
+[UI Flow Version 1 (1)](https://design.penpot.app/#/view?file-id=f0485fb1-4e63-8165-8008-3908c56b0abb&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&index=0&share-id=bd31e32d-d69f-81e2-8008-638bafe70da5)
 
 ### Testing
 
@@ -84,7 +84,7 @@ I attempted to implement the suggested features in the most effective way possib
 
 *For the Login page, there are two seperate buttons for creator and user, these will be merged in the full site where code will be implemented to differentiate account types. I will also likely change how the signup page handles creators in the refined UI.
 
-[UI Flow Version 2](https://design.penpot.app/#/view?file-id=20bdb21e-17d3-8193-8008-446ea443d562&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&index=0&share-id=2be68822-842f-8175-8008-661a63830092)
+[UI Flow Version 2 (2)](https://design.penpot.app/#/view?file-id=20bdb21e-17d3-8193-8008-446ea443d562&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&index=0&share-id=2be68822-842f-8175-8008-661a63830092)
 
 I tested this updated version with my end user and they said:
 
@@ -94,26 +94,46 @@ I tested this updated version with my end user and they said:
 
 I improved the design significantly, making small changes in order to preserve the feel of the website.
 
-[UI Prototype Version 1](https://design.penpot.app/#/view?file-id=a1a9e568-e174-80fb-8008-5d14c953a045&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&frame-id=b2324e0b-83f6-804f-8008-5d14e1d7e81e&index=14)
+[UI Prototype Version 1 (3)](https://design.penpot.app/#/view?file-id=a1a9e568-e174-80fb-8008-5d14c953a045&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&frame-id=b2324e0b-83f6-804f-8008-5d14e1d7e81e&index=14)
 
 ### Testing
 
-Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
+When I tested my prototype with my end user, they didn't like the way the creator pages were laid out and thought that the Analytics and Results pages were too similar to keep seperate.
+
+They also thought that rather than a 'Create new poll' button, I should add a plus instead which keeps the site cleaner.
+
+And they also told me that I should rearrange my pages so that the create tab is not on the same section as the public polls.
 
 ### Changes / Improvements
 
 Replace this text with notes any improvements you made as a result of the testing.
 
-*FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+[UI Prototype Version 2 (4)](https://design.penpot.app/#/view?file-id=3be9e5e1-190f-8090-8008-6f2300a180b8&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&frame-id=b2324e0b-83f6-804f-8008-5d14e1d7e81e&index=13)
 
 
 ## Refined UI Prototype
 
-Having established the layout of the UI screens, the prototype was refined visually, in terms of colour, fonts, etc.
+Refining my site through Colour and Design.
 
-This Figma demo shows the UI with refinements applied:
+After some choosing, I came up with 4 possible colour schemes implimenting vibrant colours for the options and charts:
 
-*FIGMA REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+![Colour Scheme Option 1](screenshots/scheme-1.png)
+
+Based on the UI prototype colours which my end user liked.
+
+![Colour Scheme Option 2](screenshots/scheme-2.png)
+
+A darker variation of the original red blue and purple.
+
+![Colour Scheme Option 3](screenshots/scheme-3.png)
+
+Red Blue and Green Option.
+
+![Colour Scheme Option 4](screenshots/scheme-4.png)
+
+Blue Green and Purple Option
+
+I showed these options to my end user and they liked the second option the best and thought that the default darker theme would make the colours pop more.
 
 ### Testing
 

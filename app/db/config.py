@@ -15,32 +15,133 @@
 #     SEED_DATA = "INSERT INTO name (...)" or None
 #----------------------------------------------------------------------------
 
-class NoteTable:
+class users:
 
-    NAME = "note"
+    NAME = "users"
 
     SCHEMA = """
-        CREATE TABLE note (
-            id      INTEGER PRIMARY KEY AUTOINCREMENT,
-            title   TEXT NOT NULL,
-            body    TEXT,
-            pinned  INTEGER DEFAULT 0,
-            created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        CREATE TABLE users (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            username    TEXT NOT NULL,
+            pass_hash   TEXT NOT NULL,
+            is_creator  INTEGER DEFAULT 0,
+            is_admin    INTEGER DEFAULT 0
         )
     """
 
     SEED_DATA = """
-        INSERT INTO note (title, pinned, body)
+        INSERT INTO users (id, username, pass_hash, is_creator, is_admin)
         VALUES
-            ("Welcome!",      1, "This is a demo application using Flask, Jinja and SQLite."),
-            ("Shopping List", 0, "Milk\nBread\nEggs\nCheese"),
-            ("Meeting Notes", 0, "Discussed project timeline.\n\nAction items:\n- Review design\n- Update docs"),
-            ("Recipe: Pasta", 0, "Ingredients:\n- 500g pasta\n- Tomato sauce\n- Garlic\n\nCook pasta, add sauce, enjoy!"),
-            ("Important!",    1, "Remember to backup your database regularly.")
+            (0, "John Poll", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 1),
+            (1, "Mac's Donald", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 1, 0),
+            (2, "Burgerlover6", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0)
     """
 
-# Add more table classes here...
+class polls:
 
+    NAME = "polls"
+
+    SCHEMA = """
+        CREATE TABLE polls (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            title       TEXT NOT NULL,
+            subtitle    TEXT,
+            image_path  TEXT,
+            is_public   INTEGER DEFAULT 0,
+            
+            owner_id    INTEGER NOT NULL,
+            
+            FOREIGN KEY(owner_id) REFERENCES users(id)
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO polls (id, owner_id, title, subtitle, is_public)
+        VALUES
+            (0, 1, "Big Matt", "How do we feel about our new 'Big Matt' burger?", 1)
+    """
+
+class options:
+
+    NAME = "options"
+
+    SCHEMA = """
+        CREATE TABLE options (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            text        TEXT NOT NULL,
+            
+            poll_id     INTEGER NOT NULL,
+            
+            FOREIGN KEY(poll_id) REFERENCES polls(id)
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO options (id, poll_id, text)
+        VALUES
+            (0, 0, "Love It!"),
+            (1, 0, "Hate It.")
+    """
+
+class votes:
+
+    NAME = "votes"
+
+    SCHEMA = """
+        CREATE TABLE votes (
+            poll_id     INTEGER NOT NULL,
+            option_id     INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            
+            FOREIGN KEY(poll_id) REFERENCES polls(id),
+            FOREIGN KEY(option_id) REFERENCES options(id),
+            FOREIGN KEY(user_id) REFERENCES users(id),
+
+            PRIMARY KEY(poll_id, option_id, user_id)
+        )
+    """
+
+    SEED_DATA = """
+    """
+
+class participants:
+
+    NAME = "participants"
+
+    SCHEMA = """
+        CREATE TABLE participants (
+            poll_id     INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            
+            FOREIGN KEY(poll_id) REFERENCES polls(id),
+            FOREIGN KEY(user_id) REFERENCES users(id),
+
+            PRIMARY KEY(poll_id, user_id)
+        )
+    """
+
+    SEED_DATA = """
+    """
+
+class comments:
+
+    NAME = "comments"
+
+    SCHEMA = """
+        CREATE TABLE comments (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            text        TEXT NOT NULL,
+            
+            poll_id     INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            
+            FOREIGN KEY(poll_id) REFERENCES polls(id),
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
+    """
+
+    SEED_DATA = """
+    """
 
 
 #----------------------------------------------------------------------------
@@ -59,7 +160,11 @@ class NoteTable:
 #----------------------------------------------------------------------------
 
 TABLES = [
-    NoteTable,
-    # Add more tables here...
+    users,
+    polls,
+    options,
+    votes,
+    participants,
+    comments,
 ]
 

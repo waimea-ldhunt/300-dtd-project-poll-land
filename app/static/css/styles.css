@@ -34,6 +34,9 @@ main {
     max-width: 60rem;
     margin-inline: auto;
     padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 
@@ -68,32 +71,37 @@ main > h2 {
 
 /* Notes --------------------------------------------------*/
 
-#notes {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
-    align-items: start;
+form {
+    width: 25rem;
+    display: flex;
+    flex-direction: column;  
 
-    .note {
-        padding: 1rem;
-        box-shadow: 0 0.5rem 1rem #0004;
-        border: 1px solid var(--border-col);
-        background-color: var(--back-col-panel);
-
-        header {
+    label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 2rem;
+        margin-bottom: 0.5rem;
+    
+        div.labelRow {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        footer {
-            font-size: 0.8rem;
-            font-style: italic;
-        }
-
-        &.pinned {
-            border-color: var(--accent-col);
         }
     }
 }
 
+
+
+sub {
+    color: var(--accent-col);
+}
+
+button {
+    margin-bottom: 0.5rem;
+
+    a.button {
+    text-decoration: none;
+    color: #111;
+    text-align: center;
+    }
+}

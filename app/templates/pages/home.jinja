@@ -1,0 +1,35 @@
+{#=====================================================
+  Home page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h2>Pollland</h2>
+
+    {% for poll in polls %}
+
+        <h3>{{poll.title}}</h3>
+        <h4>{{poll.subtitle}}</h4>
+        <h5> - {{poll.username}}</h5>
+
+        {% for option in options %}
+            {% if option.poll_id == poll.id %}
+                {% if session.logged_in and not (poll.owner_id == session.user.id or session.user.is_admin == 1)%}
+                    <button>{{option.text}}</button>
+                {% else %}
+                    <button disabled>{{option.text}}</button>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if session.logged_in and (poll.owner_id == session.user.id or session.user.is_admin == 1) %}
+            <a href="/">Close Poll</a>
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock %}
+
