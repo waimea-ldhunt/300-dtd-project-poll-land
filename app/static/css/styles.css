@@ -82,11 +82,6 @@ form {
         justify-content: center;
         min-height: 2rem;
         margin-bottom: 0.5rem;
-    
-        div.labelRow {
-            display: flex;
-            justify-content: space-between;
-        }
     }
 }
 
@@ -104,4 +99,9 @@ button {
     color: #111;
     text-align: center;
     }
+}
+
+div.row {
+    display: flex;
+    justify-content: space-between;
 }

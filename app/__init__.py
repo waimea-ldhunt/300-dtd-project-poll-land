@@ -130,6 +130,45 @@ def create_user():
         flash(f"Account '{username}' Created, Please Log In", "success")
         return redirect("/login")
 
+@app.get("/poll/<int:poll_id>/vote/<int:option_id>")
+def vote(poll_id, option_id):
+
+    with connect_db() as db:
+        
+        sql = """
+                DELETE FROM votes
+                WHERE poll_id=?
+                AND user_id=? 
+            """
+        params = (poll_id, session["user"]["id"])
+        db.execute(sql, params)
+
+        sql = """
+            INSERT INTO votes (poll_id, option_id, user_id)
+            VALUES (?, ?, ?)
+        """
+        params = (poll_id, option_id, session["user"]["id"])
+        db.execute(sql, params)
+
+        flash(f"Vote Added", "success")
+        return redirect("/")
+
+@app.get("/poll/<int:poll_id>/unvote")
+def revoke_vote(poll_id):
+    
+    with connect_db() as db:
+
+        sql = """
+            DELETE FROM votes
+            WHERE poll_id=?
+            AND user_id=? 
+        """
+        params = (poll_id, session["user"]["id"])
+        db.execute(sql, params)
+
+        flash(f"Vote Removed", "success")
+        return redirect("/")
+
 @app.get("/logout")
 def logout_user():
     session.clear()

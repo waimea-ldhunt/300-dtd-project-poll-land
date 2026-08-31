@@ -137,15 +137,18 @@ I showed these options to my end user and they liked the second option the best 
 
 ### Testing
 
-Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
+For this design process I made sure to comunicate with my end user during the colouring so that they had input before the final product.
+
+![Input Colour Options](screenshots/InputColourTesting.png)
+
+I had two differring colouring ideas for the text inputs and so I asked my end users which one they prefferent and they told me that they much preffered the first (solid colour) option.
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+I changed little to no design elements and simply recolored the design, consistently checking my in with my end user to ensure they were happy with the implementation of colour.
 
-*FIGMA IMPROVED REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
-
+[Colour Prototype Version 1 (5)](https://design.penpot.app/#/view?file-id=81f57451-85cc-819d-8008-774ef6116344&page-id=f0485fb1-4e63-8165-8008-3908c56b0abc&section=interactions&index=0&share-id=c269caa0-e456-818c-8008-8b4cf0c3088d)
 
 ## Sprint Review
 
-Replace this text with a statement about how the sprint has moved the project forward - key success point, any things that didn't go so well, etc.
+I think that this sprint went well, I was able to iterate and improve upon my original idea for the web app and I am happy with the result. Talking with my end-user allowed me to make regular refinements and create a finished product that my end-user is happy with.

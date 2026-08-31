@@ -17,11 +17,33 @@
 
         {% for option in options %}
             {% if option.poll_id == poll.id %}
-                {% if session.logged_in and not (poll.owner_id == session.user.id or session.user.is_admin == 1)%}
-                    <button>{{option.text}}</button>
-                {% else %}
-                    <button disabled>{{option.text}}</button>
-                {% endif %}
+
+                <div class="row">
+
+                    {% if session.logged_in and session.user.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | first | default({('user_id'): none })).user_id %}
+
+                        {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | first ).option_id %}
+                            <button><a href="/poll/{{poll.id}}/unvote" class="button">{{option.text}} [Remove Vote]</a></button>
+                        {% else %}
+                            <button><a href="/poll/{{poll.id}}/vote/{{option.id}}" class="button">{{option.text}} [Change Vote]</a></button>
+                        {% endif%}
+
+                        <p>{{ votes | selectattr('poll_id', 'eq', poll.id) | list | first }}</p>
+
+                    {% else %}
+
+                        {% if ( not session.logged_in ) or ( session.logged_in and (poll.owner_id == session.user.id or session.user.is_admin == 1) )%}
+                            <button disabled>{{option.text}}</button>
+                        {% else %}
+                            <button><a href="/poll/{{poll.id}}/vote/{{option.id}}" class="button">{{option.text}}</a></button>
+                        {% endif %}
+
+                    {% endif %}
+
+                <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</p>
+
+                </div>
+
             {% endif %}
         {% endfor %}
 
