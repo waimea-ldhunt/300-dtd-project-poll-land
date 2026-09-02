@@ -102,6 +102,9 @@ class votes:
     """
 
     SEED_DATA = """
+        INSERT INTO votes (poll_id, option_id, user_id)
+        VALUES
+            (0, 0, 2)
     """
 
 class participants:
@@ -141,6 +144,9 @@ class comments:
     """
 
     SEED_DATA = """
+        INSERT INTO comments (id, text, poll_id, user_id)
+        VALUES
+            (0, "I LOVE THE BIG MATT!", 0, 2)
     """
 
 
