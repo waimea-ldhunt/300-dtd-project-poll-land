@@ -34,7 +34,8 @@ class users:
         VALUES
             (0, "John Poll", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 1),
             (1, "Mac's Donald", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 1, 0),
-            (2, "Burgerlover6", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0)
+            (2, "Burgerlover6", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0),
+            (3, "Sauceking", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0)
     """
 
 class polls:
@@ -58,7 +59,8 @@ class polls:
     SEED_DATA = """
         INSERT INTO polls (id, owner_id, title, subtitle, is_public)
         VALUES
-            (0, 1, "Big Matt", "How do we feel about our new 'Big Matt' burger?", 1)
+            (0, 1, "Big Matt", "How do we feel about our new 'Big Matt' burger?", 1),
+            (1, 1, "Secret Sauce", "Which Flavour should our new 'Secret Sauce' be?", 0)
     """
 
 class options:
@@ -80,7 +82,10 @@ class options:
         INSERT INTO options (id, poll_id, text)
         VALUES
             (0, 0, "Love It!"),
-            (1, 0, "Hate It.")
+            (1, 0, "Hate It."),
+            (2, 1, "BBQ"),
+            (3, 1, "Pineapple"),
+            (4, 1, "Concrete")
     """
 
 class votes:
@@ -124,6 +129,9 @@ class participants:
     """
 
     SEED_DATA = """
+        INSERT INTO participants (poll_id, user_id)
+        VALUES
+            (1, 3)
     """
 
 class comments:

@@ -31,12 +31,24 @@ Project Evidence
 The following user accounts have been created to demonstrate the features of the system:
 
 Test User 1:
-- Username: xxxxx
-- Password: xxxxx
+- Username: John Poll
+- Password: test
+- Admin
 
 Test User 2:
-- Username: xxxxx
-- Password: xxxxx
+- Username: Mac's Donald
+- Password: test
+- Creator
+
+Test User 3:
+- Username: Burgerlover6
+- Password: test
+- User
+
+Test User 4:
+- Username: Sauceking
+- Password: test
+- User
 
 ...
 

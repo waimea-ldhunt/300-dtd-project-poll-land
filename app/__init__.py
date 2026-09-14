@@ -54,9 +54,21 @@ def home_page():
         params = ()
         votes = db.execute(sql, params).fetchall()
 
+        sql = """
+            SELECT *
+            FROM participants
+        """
+        params = ()
+        participants = db.execute(sql, params).fetchall()
+
         vote_groups = [
             (vote["poll_id"], vote["user_id"])
             for vote in votes
+        ]
+
+        participant_groups = [
+            (participant["poll_id"], participant["user_id"])
+            for participant in participants
         ]
 
         sql = """
@@ -68,7 +80,7 @@ def home_page():
 
 
 
-        return render_template("pages/home.jinja", users=users, polls=polls, options=options, votes=votes, vote_groups=vote_groups, comments=comments)
+        return render_template("pages/home.jinja", users=users, polls=polls, options=options, votes=votes, vote_groups=vote_groups, participant_groups=participant_groups, comments=comments)
     
 @app.get("/login")
 def login_page():
