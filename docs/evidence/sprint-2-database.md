@@ -21,7 +21,7 @@ Implement the database, populated with test data. Create queries that retrieve t
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![DB Test Data](screenshots/database-data-implementation.png)
 
 ### Changes / Improvements
 
@@ -29,12 +29,14 @@ Replace this text with notes any improvements you made as a result of the testin
 
 **PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
 
-## Testing Display and Queries
+## Testing Display Data
 
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![Logged Out User View](screenshots/lo-site-view.png)
+
+![Logged In (Participating) User View](screenshots/sk-site-view.png)
 
 ### Changes / Improvements
 
@@ -43,11 +45,45 @@ Replace this text with notes any improvements you made as a result of the testin
 **PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
 
 
-## Testing User Input
+## Testing Inserting User Data
+
+Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+![Alt text](screenshots/account-creation-test.png)
+
+
+
+![Alt text](screenshots/account-create-route.png)
+
+
+
+![Alt text](screenshots/account-insert-success.png)
+
+
+
+![Alt text](screenshots/login-test.png)
+
+
+
+![Alt text](screenshots/login-route.png)
+
+
+
+![Alt text](screenshots/login-success.png)
+
+### Changes / Improvements
+
+Replace this text with notes any improvements you made as a result of the testing.
+
+**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+
+
+## Testing Deleting User Data
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![Alt text](screenshots/vote-delete-test.gif)
+
+![Alt text](screenshots/vote-delete-route.png)
 
 ### Changes / Improvements
 

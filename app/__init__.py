@@ -27,7 +27,7 @@ app = Flask(__name__)
 def home_page():
     with connect_db() as db:
         sql = """
-            SELECT *
+            SELECT username
             FROM users
         """
         params = ()
@@ -61,6 +61,13 @@ def home_page():
         params = ()
         participants = db.execute(sql, params).fetchall()
 
+        sql = """
+            SELECT *
+            FROM comments
+        """
+        params = ()
+        comments = db.execute(sql, params).fetchall()
+
         vote_groups = [
             (vote["poll_id"], vote["user_id"])
             for vote in votes
@@ -71,16 +78,16 @@ def home_page():
             for participant in participants
         ]
 
-        sql = """
-            SELECT *
-            FROM comments
-        """
-        params = ()
-        comments = db.execute(sql, params).fetchall()
-
-
-
-        return render_template("pages/home.jinja", users=users, polls=polls, options=options, votes=votes, vote_groups=vote_groups, participant_groups=participant_groups, comments=comments)
+        return render_template(
+            "pages/home.jinja",
+            users=users,
+            polls=polls,
+            options=options,
+            votes=votes,
+            vote_groups=vote_groups,
+            participant_groups=participant_groups,
+            comments=comments
+        )
     
 @app.get("/login")
 def login_page():
