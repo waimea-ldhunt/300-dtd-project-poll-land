@@ -1,0 +1,53 @@
+{#=====================================================
+  Login page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+{% block title %} | Edit{% endblock%}
+
+{% block content %}
+
+    <h2>Edit Poll</h2>
+
+    <form method="POST" action="/poll/{{poll.id}}/update">
+        <label>
+            Title
+            <input name="title" type="text" value="{{poll.title}}" required>
+        </label>
+
+        <label>
+            Subtitle
+            <input name="subtitle" type="text" value="{{poll.subtitle}}" required>
+        </label>
+        
+        <label>
+            <div class="row">
+                Public
+                <input name="is_creator" type="checkbox" id="public_switch" {% if poll.is_public == 1 %} checked {% endif %} disabled>
+            </div>
+        </label>
+
+        <label>
+            <div class="row">
+                Participants
+                <input name="participants" type="range" min="2" max="10" value="{{participants}}" disabled>
+                <output id="range_output">{{participants}}</output>
+            </div>
+        </label>
+        
+        <div>
+            {% for option in options %}
+                <label>
+                    <input name="option" type="text" value="{{option.text}}" disabled>
+                </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <button><a href="/poll/{{poll.id}}/delete">Delete Poll</a></button>
+
+{% endblock %}
+

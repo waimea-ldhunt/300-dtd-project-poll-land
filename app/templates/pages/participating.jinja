@@ -1,0 +1,54 @@
+{#=====================================================
+  Login page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+{% block title %} | My Polls{% endblock%}
+
+{% block content %}
+
+    <h2>Participating</h2>
+
+    <h3>{{participating_polls | count}}</h3>
+
+    {% if participating_polls %}
+
+      {% for poll in participating_polls%}
+
+        <h3>{{polls[poll.poll_id].title}}</h3>
+        <h4>{{polls[poll.poll_id].subtitle}}</h4>
+        <h5> - {{users[polls[poll.poll_id].owner_id].username}}</h5>
+
+        {% for option in options %}
+          {% if option.poll_id == polls[poll.poll_id].id %}
+
+            <div class="row">
+
+            {% if (polls[poll.poll_id].id, session.user.id) in vote_groups %}
+
+              {% if option.id == ( votes | selectattr('poll_id', 'eq', polls[poll.poll_id].id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
+                <button><a href="/poll/{{polls[poll.poll_id].id}}/unvote" class="button">{{option.text}} [Remove Vote]</a></button>
+              {% else %}
+                <button><a href="/poll/{{polls[poll.poll_id].id}}/vote/{{option.id}}" class="button">{{option.text}} [Change Vote]</a></button>
+              {% endif%}
+
+            {% else %}
+              <button><a href="/poll/{{polls[poll.poll_id].id}}/vote/{{option.id}}" class="button">{{option.text}}</a></button>          
+            {% endif %}
+
+            </div>
+
+          {% endif %}
+        {% endfor %}
+
+      {% endfor %}
+
+    {% else %}
+
+      <p> We have no polls for you today.</p>
+
+    {% endif %}
+
+{% endblock %}
+

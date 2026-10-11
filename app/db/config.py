@@ -24,6 +24,7 @@ class users:
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
             username    TEXT NOT NULL,
             pass_hash   TEXT NOT NULL,
+            image_path  TEXT DEFAULT "default-profile.jpg",
             is_creator  INTEGER DEFAULT 0,
             is_admin    INTEGER DEFAULT 0
         )

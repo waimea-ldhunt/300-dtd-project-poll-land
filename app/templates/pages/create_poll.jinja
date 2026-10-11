@@ -1,0 +1,66 @@
+{#=====================================================
+  Login page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+{% block title %} | Create{% endblock%}
+
+{% block content %}
+    <h2>Create Poll</h2>
+
+    <form method="POST" action="/poll/create" enctype="multipart/form-data">
+        <label>
+            Title
+            <input name="title" type="text" required>
+        </label>
+
+        <label>
+            Subtitle
+            <input name="subtitle" type="text" required>
+        </label>
+
+        <label>
+            Image
+            <input
+                name="image"
+                type="file"
+                accept="image/png, image/jpeg, image/gif"
+                required
+            >
+        </label>
+        
+        <label>
+            <div class="row">
+                Public
+                <input name="is_creator" type="checkbox" id="public_switch">
+            </div>
+        </label>
+
+        <label>
+            <div class="row">
+                Participants
+                <input name="participants" type="range" min="2" max="10" value="6" id="participant_range">
+                <output id="range_output">6</output>
+            </div>
+        </label>
+        
+        <div id="options_container">
+            <label>
+                <input name="option" type="text" placeholder="Enter Option Text" required>
+                
+            </label>
+
+            <label>
+                <input name="option" type="text" placeholder="Enter Option Text" required>
+            </label>
+        </div>
+
+        <button type="button" id="add_option_button">Add Option</button>
+
+        <button type="submit">Create Poll</button>
+    </form>
+
+    <script src="/static/js/poll_form.js"></script>
+{% endblock %}
+

@@ -1,0 +1,54 @@
+{#=====================================================
+  Login page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+{% block title %} | Login{% endblock%}
+
+{% block content %}
+
+    <h2>{{poll.title}}</h2>
+    <h3>{{poll.subtitle}}</h3>
+
+    <div class="row">
+        {% for option in options %}
+            <h4>{{option.text}}</h4>
+        {% endfor %}
+    </div>
+
+    {% if  poll.is_public == 1 and comments %}
+        {% for comment in comments %}
+            <p>{{comment.text}} - <b>{{users[comment.user_id].username}}</b></p>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <button><a href="/poll/{{poll.id}}/edit" class="button">Edit</a></button>
+        <button><a href="/poll/{{poll.id}}/delete" class="button">Delete</a></button>
+    </div>
+
+    <h3>Analysis</h3>
+
+    <p>{{votes | count}} participants have voted{% if poll.is_public == 0 %}, out of {{participants | count}} total participants{% endif %}</p>
+
+    {% for option in options %}
+        <div class="row">
+            <h4>{{option.text}}</h4>
+            <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }} Votes</p>
+            {% if votes %}
+                <p>{{ ((votes | selectattr('option_id', 'eq', option.id) | list | count) / (votes | count)) * 100 | round(1) }}%</p>
+            {% else %}
+                <p>0%</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    
+
+
+    
+    
+
+{% endblock %}
+

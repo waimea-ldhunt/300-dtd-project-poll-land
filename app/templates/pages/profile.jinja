@@ -1,0 +1,58 @@
+{#=====================================================
+  Login page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+{% block title %} | Profile{% endblock%}
+
+{% block content %}
+
+    <h2>Your Profile</h2>
+
+    <form method="POST" action="/user/{{user.id}}/update/username">
+        Username
+        <div class="row">
+            <input name="username" type="text" value="{{user.username}}" required>
+
+            <button type="submit">Save</button>
+        </div>
+    </form>
+
+    <p>Profile Image</p>
+
+    {% if user.image_path %}
+        <img src="/static/uploads/{{user.image_path}}">
+    {% endif %}
+
+    <form method="POST" action="/user/{{user.id}}/update/image" enctype="multipart/form-data">
+        <div class="row">
+            Change Image
+            <input
+                name="image"
+                type="file"
+                accept="image/png, image/jpeg, image/gif"
+                required
+            >
+
+            <button type="submit">Save</button>
+            </div>
+        </label>
+
+
+    </form>
+
+    <form method="POST" action="/user/{{user.id}}/update/password">
+        <label>
+            Change Password
+            <input name="old_password" type="password" placeholder="Enter Old Password" required>
+            <input name="old_password" type="password" placeholder="Enter New Password" required>
+        </label>
+
+        <button type="submit" >Update Password</button>
+    </form>
+
+    <button><a href="/user/{{user.id}}/delete">Delete Account</a></button>
+
+{% endblock %}
+
