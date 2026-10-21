@@ -11,6 +11,18 @@
     <h2>{{poll.title}}</h2>
     <h3>{{poll.subtitle}}</h3>
 
+    {% if poll.image_path %}
+        <img src="/static/uploads/{{poll.image_path}}">
+    {% endif %}
+
+    {% if votes %}
+        <div>
+          <canvas class="pie_chart" data-poll_labels="{{labels}}", data-poll_data="{{data}}"></canvas>
+        </div>
+
+        <script src="/static/js/poll.js"></script>
+    {% endif %}
+
     <div class="row">
         {% for option in options %}
             <h4>{{option.text}}</h4>

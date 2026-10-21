@@ -10,7 +10,7 @@
 
     <h2>Edit Poll</h2>
 
-    <form method="POST" action="/poll/{{poll.id}}/update">
+    <form method="POST" action="/poll/{{poll.id}}/update"  enctype="multipart/form-data">
         <label>
             Title
             <input name="title" type="text" value="{{poll.title}}" required>
@@ -18,7 +18,20 @@
 
         <label>
             Subtitle
-            <input name="subtitle" type="text" value="{{poll.subtitle}}" required>
+            <input name="subtitle" type="text" value="{{poll.subtitle}}">
+        </label>
+
+        {% if poll.image_path %}
+            <img src="/static/uploads/{{poll.image_path}}">
+        {% endif %}
+
+        <label>
+            Image
+            <input
+                name="image"
+                type="file"
+                accept="image/png, image/jpeg, image/gif"
+            >
         </label>
         
         <label>
@@ -31,7 +44,7 @@
         <label>
             <div class="row">
                 Participants
-                <input name="participants" type="range" min="2" max="10" value="{{participants}}" disabled>
+                <input name="participants" type="range" min="2" max="{{participants}}" value="{{participants}}" disabled>
                 <output id="range_output">{{participants}}</output>
             </div>
         </label>

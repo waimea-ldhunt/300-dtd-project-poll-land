@@ -17,6 +17,19 @@
             <h3>{{poll.title}}</h3>
             <h4>{{poll.subtitle}}</h4>
             <a href="/profile/{{poll.owner_id}}"><h5> - {{users[poll.owner_id].username}}</h5></a>
+
+            {% if poll.image_path %}
+                <img src="/static/uploads/{{poll.image_path}}">
+            {% endif %}
+
+            {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
+                <div>
+                  <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}", data-poll_data="{{data[poll.id]}}"></canvas>
+                </div>
+            {% else %}
+                <p>This Poll Has No Votes</p>
+            {% endif %}
+
             <a href="/poll/{{poll.id}}/delete">Delete</a>
             {% if poll.is_public == 1 %} <p>Public</p> {% endif %}
 
@@ -24,7 +37,6 @@
                 {% if option.poll_id == poll.id %}
                     <div class="row">
                         <button disabled>{{option.text}}</button>
-                        <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</p>
                     </div>
                 {% endif %}
             {% endfor %}
@@ -48,13 +60,25 @@
 
                 <h3>{{poll.title}}</h3>
                 <h4>{{poll.subtitle}}</h4>
+
+                {% if poll.image_path %}
+                    <img src="/static/uploads/{{poll.image_path}}">
+                {% endif %}
+
+                {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
+                    <div>
+                      <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}", data-poll_data="{{data[poll.id]}}"></canvas>
+                    </div>
+                {% else %}
+                    <p>This Poll Has No Votes</p>
+                {% endif %}
+
                 <h5><a href="/poll/{{poll.id}}/details">Details</a></h5>
 
                 {% for option in options %}
                     {% if option.poll_id == poll.id %}
                         <div class="row">
                             <button disabled>{{option.text}}</button>
-                            <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</p>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -64,21 +88,17 @@
                         <h5>Comments</h5> 
                         {% for comment in comments %}
                             {% if comment.poll_id == poll.id %}
-                                <p>{{comment.text}} - <b>{{users[comment.user_id].username}}</b></p>
+                                <p>{{comment.text}} - <b>{{users[comment.user_id].username}}</b>{% if session.logged_in and comment.user_id == session.user.id %}<a href="/comment/{{comment.id}}/delete"> - Delete</a>{% endif %}</p>
                             {% endif %} 
                         {% endfor%}
                     {% else %}
                         <h5>There are no comments</h5>
                     {% endif %}
 
-                {% if session.logged_in %}
                     <div class="row"><form method="POST" action="/poll/{{poll.id}}/comment">
-
                         <input name="text" type="text" placeholder="Add Comment...">
                         <button type="submit">Comment</button>
-
                     </form></div>
-                {% endif %}
                     
                 {% endif %}
             {% endif %}
@@ -94,6 +114,18 @@
                 <h3>{{poll.title}}</h3>
                 <h4>{{poll.subtitle}}</h4>
                 <a href="/profile/{{poll.owner_id}}"><h5> - {{users[poll.owner_id].username}}</h5></a>
+
+                {% if poll.image_path %}
+                    <img src="/static/uploads/{{poll.image_path}}">
+                {% endif %}
+
+                {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
+                    <div>
+                      <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}", data-poll_data="{{data[poll.id]}}"></canvas>
+                    </div>
+                {% else %}
+                    <p>This Poll Has No Votes</p>
+                {% endif %}
 
                 {% for option in options %}
                     {% if option.poll_id == poll.id %}
@@ -118,8 +150,6 @@
 
                             {% endif %}
 
-                            <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</p>
-
                         </div>
 
                     {% endif %}
@@ -141,8 +171,21 @@
                         <h5>There are no comments</h5>
 
                     {% endif %}
+
+                    {% if session.logged_in %}
+                        <div class="row"><form method="POST" action="/poll/{{poll.id}}/comment">
+
+                            <input name="text" type="text" placeholder="Add Comment...">
+                            <button type="submit">Comment</button>
+
+                        </form></div>
+                    {% endif %}
+
                 {% endif %}
             {% endif %}
         {% endfor %}
     {% endif%}
+
+    <script src="/static/js/poll.js"></script>
+
 {% endblock %}

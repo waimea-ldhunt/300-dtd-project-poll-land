@@ -115,19 +115,19 @@ Refining my site through Colour and Design.
 
 After some choosing, I came up with 4 possible colour schemes implimenting vibrant colours for the options and charts:
 
-![Colour Scheme Option 1](screenshots/scheme-1.png)
+![Colour Scheme Option 1](screenshots/sprint1/scheme-1.png)
 
 Based on the UI prototype colours which my end user liked.
 
-![Colour Scheme Option 2](screenshots/scheme-2.png)
+![Colour Scheme Option 2](screenshots/sprint1/scheme-2.png)
 
 A darker variation of the original red blue and purple.
 
-![Colour Scheme Option 3](screenshots/scheme-3.png)
+![Colour Scheme Option 3](screenshots/sprint1/scheme-3.png)
 
 Red Blue and Green Option.
 
-![Colour Scheme Option 4](screenshots/scheme-4.png)
+![Colour Scheme Option 4](screenshots/sprint1/scheme-4.png)
 
 Blue Green and Purple Option
 
@@ -137,7 +137,7 @@ I showed these options to my end user and they liked the second option the best 
 
 For this design process I made sure to comunicate with my end user during the colouring so that they had input before the final product.
 
-![Input Colour Options](screenshots/InputColourTesting.png)
+![Input Colour Options](screenshots/sprint1/InputColourTesting.png)
 
 I had two differring colouring ideas for the text inputs and so I asked my end users which one they prefferent and they told me that they much preffered the first (solid colour) option.
 

@@ -8,51 +8,141 @@
 
 {% block content %}
 
-    <h2>Your Profile</h2>
+    {% if session.logged_in and user.id == session.user.id %}
 
-    <form method="POST" action="/user/{{user.id}}/update/username">
-        Username
-        <div class="row">
-            <input name="username" type="text" value="{{user.username}}" required>
+        <h2>Your Profile</h2>
 
-            <button type="submit">Save</button>
-        </div>
-    </form>
+        <form method="POST" action="/user/{{user.id}}/update/username">
+            Username
+            <div class="row">
+                <input name="username" type="text" value="{{user.username}}" required>
 
-    <p>Profile Image</p>
-
-    {% if user.image_path %}
-        <img src="/static/uploads/{{user.image_path}}">
-    {% endif %}
-
-    <form method="POST" action="/user/{{user.id}}/update/image" enctype="multipart/form-data">
-        <div class="row">
-            Change Image
-            <input
-                name="image"
-                type="file"
-                accept="image/png, image/jpeg, image/gif"
-                required
-            >
-
-            <button type="submit">Save</button>
+                <button type="submit">Save</button>
             </div>
-        </label>
+        </form>
+
+        <p>Profile Image</p>
+
+        {% if user.image_path %}
+            <img src="/static/uploads/{{user.image_path}}">
+        {% endif %}
+
+        <form method="POST" action="/user/{{user.id}}/update/image" enctype="multipart/form-data">
+            <div class="row">
+                Change Image
+                <input
+                    name="image"
+                    type="file"
+                    accept="image/png, image/jpeg, image/gif"
+                    required
+                >
+
+                <button type="submit">Save</button>
+                </div>
+            </label>
 
 
-    </form>
+        </form>
 
-    <form method="POST" action="/user/{{user.id}}/update/password">
-        <label>
-            Change Password
-            <input name="old_password" type="password" placeholder="Enter Old Password" required>
-            <input name="old_password" type="password" placeholder="Enter New Password" required>
-        </label>
+        <form method="POST" action="/user/{{user.id}}/update/password">
+            <label>
+                Change Password
+                <input name="old_password" type="password" placeholder="Enter Old Password" required>
+                <input name="old_password" type="password" placeholder="Enter New Password" required>
+            </label>
 
-        <button type="submit" >Update Password</button>
-    </form>
+            <button type="submit" >Update Password</button>
+        </form>
 
-    <button><a href="/user/{{user.id}}/delete">Delete Account</a></button>
+        <button><a onclick="return confirm('Are you sure you wish to delete your account?')" href="/user/{{user.id}}/delete">Delete Account</a></button>
+    
+    {% elif session.logged_in and session.user.is_admin == 1 and user.is_creator == 0%}
 
+        <h2>{{user.username}}</h2>
+        <h3>User</h3>
+
+        {% if user.image_path %}
+            <img src="/static/uploads/{{user.image_path}}">
+        {% endif %}
+
+        <button><a onclick="return confirm('Are you sure you wish to delete this user?')" href="/user/{{user.id}}/delete">Delete Account</a></button>
+
+        {% for comment in comments %}
+            {% if comment.user_id == user.id %}
+                <p>{{comment.text}} - <a href="/comment/{{comment.id}}/delete">Delete</a></p>
+            {% endif %}
+        {% endfor %}
+
+    {% else %}
+        
+        <h2>{{user.username}}</h2>
+        <h3>Creator</h3>
+
+        {% if user.image_path %}
+            <img src="/static/uploads/{{user.image_path}}">
+        {% endif %}
+
+        {% if session.logged_in and session.user.is_admin == 1 %}
+            <button><a href="/user/{{user.id}}/delete">Delete Account</a></button>
+        {% endif %}
+
+        <h4>Creator's Public Polls</h4>
+
+        {% if polls %}
+            {% for poll in polls %}
+
+                <h3>{{poll.title}}</h3>
+                <h4>{{poll.subtitle}}</h4>
+
+                {% for option in options %}
+                    {% if option.poll_id == poll.id %}
+
+                        <div class="row">
+
+                            {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
+
+                                {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
+                                    <button><a href="/poll/{{poll.id}}/unvote" class="button">{{option.text}} [Remove Vote]</a></button>
+                                {% else %}
+                                    <button><a href="/poll/{{poll.id}}/vote/{{option.id}}" class="button">{{option.text}} [Change Vote]</a></button>
+                                {% endif%}
+
+                            {% else %}
+
+                                {% if not session.logged_in %}
+                                    <button disabled>{{option.text}}</button>
+                                {% else %}
+                                    <button><a href="/poll/{{poll.id}}/vote/{{option.id}}" class="button">{{option.text}}</a></button>
+                                {% endif %}
+
+                            {% endif %}
+
+                            <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</p>
+
+                        </div>
+
+                    {% endif %}
+                {% endfor %}
+
+                {% if  poll.is_public == 1 %}
+                    {% if comments | selectattr('poll_id', 'eq', poll.id) | list %}
+
+                        <h5>Comments</h5> 
+
+                        {% for comment in comments %}
+                            {% if comment.poll_id == poll.id %}
+                                <p>{{comment.text}} - <b>{{users[comment.user_id].username}}</b> - {% if session.logged_in and comment.user_id == session.user.id %}<a href="/comment/{{comment.id}}/delete">Delete</a>{% endif %}</p>
+                            {% endif %} 
+                        {% endfor%}
+
+                    {% else %}
+
+                        <h5>There are no comments</h5>
+
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 {% endblock %}
 

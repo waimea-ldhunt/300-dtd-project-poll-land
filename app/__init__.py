@@ -85,7 +85,9 @@ def home_page():
             options=options,
             votes=votes,
             vote_groups=vote_groups,
-            comments=comments
+            comments=comments,
+            labels=get_labels(polls, options),
+            data=get_data(polls, options, votes)
         )
 
 @app.get("/participating")
@@ -141,7 +143,9 @@ def participating_page():
             options=options,
             participating_polls=participating_polls,
             votes=votes,
-            vote_groups=vote_groups
+            vote_groups=vote_groups,
+            labels=get_labels(polls, options),
+            data=get_data(polls, options, votes)
         )
     
 @app.get("/login")
@@ -224,25 +228,40 @@ def create_user():
         flash(f"Account '{username}' Created, Please Log In", "success")
         return redirect("/login")
 
-@login_required
+
 @app.get("/logout")
+@login_required
 def logout_user():
     session.clear()
     flash("Logged Out Successfully", "success")
     return redirect("/")
 
-@login_required
 @app.get("/create")
+@login_required
 def create_page():
     if session['user']['is_creator']:
-        return render_template("pages/create_poll.jinja")
+
+        with connect_db() as db:
+
+            sql = """
+               SELECT id
+               FROM users
+               WHERE is_creator=0
+               AND is_admin=0
+            """
+            params = ()
+            users = db.execute(sql, params).fetchall()
+            usercount = len(users)
+
+        return render_template("pages/create_poll.jinja", usercount=usercount)
     else:
         flash("You do not have permission to access this page.","error")
         return redirect("/")
     
-@login_required
 @app.post("/poll/create")
+@login_required
 def create_poll():
+
     title = request.form.get('title', '').strip()
     subtitle = request.form.get('subtitle', '').strip()
     is_public = request.form.get('is_creator')
@@ -304,8 +323,8 @@ def create_poll():
         flash("Poll Created", "success")
         return redirect("/")
     
-@login_required
 @app.get("/poll/<int:id>/edit")
+@login_required
 def edit_poll(id):
     with connect_db() as db:
 
@@ -337,15 +356,16 @@ def edit_poll(id):
                     """
                     params = (id,)
                     participants_out = db.execute(sql, params).fetchall()
-                    participants = participants_out.count()
+                    participants = len(participants_out)
 
                 return render_template("pages/edit_poll.jinja", poll=poll, options=options, participants=participants)
         else:
             flash("You do not have permission to access this page.","error")
-            return redirect("/")
+            return redirect(request.referrer or "/")
 
-@login_required
+
 @app.get("/poll/<int:id>/details")
+@login_required
 def poll_details(id):
     with connect_db() as db:
 
@@ -356,6 +376,10 @@ def poll_details(id):
         """
         params = (id,)
         poll = db.execute(sql, params).fetchone()
+
+        if not ( session["user"]["is_creator"] == 1 and session["user"]["id"] == poll["owner_id"] ):
+            flash("You do not have permission to access this page.","error")
+            return redirect(request.referrer or "/")
 
         sql = """
             SELECT *
@@ -381,32 +405,99 @@ def poll_details(id):
         params = (id,)
         participants = db.execute(sql, params).fetchall()
 
-        return render_template("pages/poll.jinja", poll=poll, options=options, votes=votes, participants=participants)
+        labels = []
+        for option in options:
+            if option["poll_id"] == poll["id"]:
+                labels.append(str(option["text"]))
 
+        data = []
+        for option in options:
+            if option["poll_id"] == poll["id"]:
+                count = 0
+                for vote in votes:
+                    if vote["option_id"] == option["id"]:
+                        count += 1
+                data.append(count)
 
-@login_required
+        print(data)
+        print(labels)
+
+        return render_template(
+            "pages/poll.jinja",
+            poll=poll,
+            options=options,
+            votes=votes,
+            participants=participants,
+            labels=labels,
+            data=data
+        )
+
 @app.post("/poll/<int:id>/update")
+@login_required
 def update_poll(id):
 
     title = request.form.get('title', '').strip()
     subtitle = request.form.get('subtitle', '').strip()
 
+    image = request.files.get('image', None)
+    
+    with connect_db() as db:
+
+            sql = """
+                SELECT *
+                FROM polls
+                WHERE id=?
+            """
+            params = (id,)
+            poll = db.execute(sql, params).fetchone()
+
+            if image:
+
+                unique_filename = save_image(image)
+
+                if poll["image_path"]:
+                    delete_image(poll["image_path"])
+
+                sql = """
+                    UPDATE polls
+                    SET title=?, subtitle=?, image_path=?
+                    WHERE id=?
+                """
+                params = (title, subtitle, unique_filename, id)
+                db.execute(sql, params)
+
+                flash("Poll Updated [Image Changed]", "success") 
+                return redirect(f"/poll/{id}/details")
+        
+            else:
+
+                sql = """
+                    UPDATE polls
+                    SET title=?, subtitle=?
+                    WHERE id=?
+                """
+                params = (title, subtitle, id)
+                db.execute(sql, params)
+
+                flash("Poll Updated", "success") 
+                return redirect(f"/poll/{id}/details")
+
+@app.get("/poll/<int:id>/delete")
+@login_required
+def delete_poll(id):
     with connect_db() as db:
 
         sql = """
-            UPDATE polls
-            SET title=?, subtitle=?
+            SELECT creator_id
+            FROM polls
             WHERE id=?
         """
-        params = (title, subtitle, id)
-        db.execute(sql, params)
-
-        flash("Changes Saved", "success")
-        return redirect("/")
-
-@app.get("/poll/<int:id>/delete")
-def delete_poll(id):
-    with connect_db() as db:
+        params = (id,)
+        poll = db.execute(sql, params).fetchone()
+        
+        if not ( session["user"]["is_creator"] == 1 and session["user"]["id"] == poll["creator_id"] ):
+            flash("You do not have permission to access this route.","error")
+            return redirect(request.referrer or "/")
 
         sql = """
             DELETE FROM polls
@@ -432,12 +523,16 @@ def delete_poll(id):
         flash("Poll Deleted", "success") 
         return redirect("/")
     
-@login_required
 @app.get("/poll/<int:poll_id>/vote/<int:option_id>")
+@login_required
 def vote(poll_id, option_id):
 
     with connect_db() as db:
-        
+
+        if session["user"]["is_admin"] == 0 and session["user"]["is_creator"]:
+            flash("You do not have permission to access this route.","error")
+            return redirect(request.referrer or "/")
+            
         sql = """
                 DELETE FROM votes
                 WHERE poll_id=?
@@ -456,11 +551,14 @@ def vote(poll_id, option_id):
         flash(f"Vote Added", "success")
         return redirect(request.referrer or "/")
 
-
-@login_required
 @app.get("/poll/<int:poll_id>/unvote")
+@login_required
 def revoke_vote(poll_id):
     with connect_db() as db:
+
+        if session["user"]["is_admin"] == 0 and session["user"]["is_creator"]:
+            flash("You do not have permission to access this route.","error")
+            return redirect(request.referrer or "/")
 
         sql = """
             DELETE FROM votes
@@ -473,15 +571,29 @@ def revoke_vote(poll_id):
         flash(f"Vote Removed", "success")
         return redirect(request.referrer or "/")
 
-@login_required
 @app.post("/poll/<int:id>/comment")
+@login_required
 def comment(id):
 
     text = request.form.get('text', '').strip()
 
     with connect_db() as db:
+
+        sql = """
+            SELECT creator_id
+            FROM polls
+            WHERE id=?
+        """
+        params = (id,)
+        poll = db.execute(sql, params).fetchone()
+
+        if session["user"]["is_admin"] == 0 and not session["user"]["id"] == poll["creator_id"]:
+            flash("You do not have permission to access this route.","error")
+            return redirect(request.referrer or "/")
+
         sql = """
             INSERT INTO comments (text, poll_id, user_id)
+            VALUES (?, ?, ?)
         """
         params = (text, id, session["user"]["id"])
         db.execute(sql, params)
@@ -489,10 +601,23 @@ def comment(id):
         flash(f"Comment Added", "success")
         return redirect(request.referrer or "/")
 
-@login_required
 @app.get("/comment/<int:id>/delete")
+@login_required
 def delete_comment(id):
     with connect_db() as db:
+
+        sql = """
+            SELECT user_id
+            FROM comments
+            WHERE id=?
+        """
+        params = (id,)
+        comment = db.execute(sql, params).fetchone()
+        
+        if session["user"]["is_admin"] == 0 and not session["user"]["id"] == comment["user_id"]:
+            flash("You do not have permission to access this route.","error")
+            return redirect(request.referrer or "/")
+
         sql = """
             DELETE FROM comments
             WHERE id=?
@@ -515,33 +640,30 @@ def view_profile(id):
         params = (id,)
         user = db.execute(sql, params).fetchone()
 
-        if session and session["user"]["id"] == id:
-            return render_template("pages/profile.jinja", user=user)
-        
-        elif session and user["is_creator"] == 1:
+        if session["logged_in"] and session["user"]["id"] == id or user["is_creator"] == 1 or session["user"]["is_admin"] == 1:
 
             sql = """
                 SELECT *
                 FROM polls
                 WHERE owner_id=?
+                AND is_public=1
             """
             params = (id,)
             polls = db.execute(sql, params).fetchall()
-    
+
             sql = """
                 SELECT *
                 FROM options
             """
             params = ()
             options = db.execute(sql, params).fetchall()
-    
+
             sql = """
                 SELECT *
                 FROM votes
             """
             params = ()
             votes = db.execute(sql, params).fetchall()
-
             sql = """
                 SELECT *
                 FROM comments
@@ -554,23 +676,25 @@ def view_profile(id):
                 FROM users
             """
             params = ()
-            comments = db.execute(sql, params).fetchall()
+            users = db.execute(sql, params).fetchall()
 
             return render_template(
-                "pages/other_profile.jinja",
+                "pages/profile.jinja",
                 user=user,
+                users=users,
                 polls=polls,
                 options=options,
                 votes=votes,
-                comments=comments
+                comments=comments,
+                labels=get_labels(polls, options),
+                data=get_data(polls, options, votes)
             )
-            
         else:
-            flash(f"This profile is private, you do not have permission to view it", "error")
+            flash("You do not have permission to view this profile","error")
             return redirect(request.referrer or "/")
 
-@login_required
 @app.post("/user/<int:id>/update/username")
+@login_required
 def update_profile(id):
     username = request.form.get('username', '').strip()
 
@@ -584,17 +708,19 @@ def update_profile(id):
         params = (username, id)
         db.execute(sql, params)
 
-        flash(f"Profile updated", "success")
-        return redirect(f"profile/{id}")
+        session['user']['username'] = username
 
-@login_required
+        flash(f"Profile updated", "success")
+        return redirect(f"/profile/{id}")
+
 @app.post("/user/<int:id>/update/image")
+@login_required
 def update_profile_image(id):
     image = request.files.get('image', None)
 
     if not image or image.filename == '':
         flash("There was a problem uploading the image", "error")
-        return redirect(request.referrer or "/")
+        return redirect(f"/profile/{id}")
 
     unique_filename = save_image(image)
 
@@ -609,10 +735,11 @@ def update_profile_image(id):
         db.execute(sql, params)
 
         flash(f"Profile Picture Updated", "success")
-        return redirect(f"profile/{id}")
+        return redirect(f"/profile/{id}")
 
-@login_required
+
 @app.post("/user/<int:id>/update/password")
+@login_required
 def update_password(id):
     old_pass = request.form.get('old_password', '').strip()
     new_pass = request.form.get('new_password', '').strip()
@@ -639,12 +766,22 @@ def update_password(id):
             WHERE id=?
         """
         params = (new_hash, id)
-        user = db.execute(sql, params).fetchone() 
+        user = db.execute(sql, params).fetchone()
+
+        session['user']['pass_hash'] = new_hash
+
+        flash("Password Changed","success")
+        return redirect(f"/profile/{id}")
 
 @login_required
 @app.get("/user/<int:id>/delete")
 def delete_user(id):
     with connect_db() as db:
+
+        if session["is_admin"] == 0 and not session["user"]["id"] == id:
+            flash("You do not have permission to access this route.","error")
+            return redirect(request.referrer or "/")
+
         sql = """
             SELECT image_path
             FROM users
@@ -653,7 +790,8 @@ def delete_user(id):
         params = (id,)
         user = db.execute(sql, params).fetchone()
 
-        delete_image(user["image_path"])
+        if user["image_path"] and not user["image_path"] == "_default-profile.png":
+            delete_image(user["image_path"])
 
         sql = """
             DELETE FROM users
@@ -661,6 +799,12 @@ def delete_user(id):
         """
         params = (id,)
         db.execute(sql, params)
+
+        if session["user"]["id"] == id:
+            session.clear()
+
+        flash("Account Deleted","success")
+        return redirect("/")
 
 def save_image(image):
     filename = secure_filename(image.filename)
@@ -678,6 +822,29 @@ def delete_image(image_path):
     if os.path.exists(filepath):
         os.remove(filepath)
 
+def get_labels(polls, options):
+    labels = []
+    for poll in polls:
+        poll_labels = []
+        for option in options:
+            if option["poll_id"] == poll["id"]:
+                poll_labels.append(str(option["text"]))
+        labels.append(poll_labels)
+    return labels
+
+def get_data(polls, options, votes):
+    data = []
+    for poll in polls:
+        poll_data = []
+        for option in options:
+            if option["poll_id"] == poll["id"]:
+                count = 0
+                for vote in votes:
+                    if vote["option_id"] == option["id"]:
+                        count += 1
+                poll_data.append(count)
+        data.append(poll_data)
+    return data
 #===========================================================
 # Configure the app
 #===========================================================

@@ -50,6 +50,21 @@ Test User 4:
 - Password: test
 - User
 
+Test User 5:
+- Username: Notflix
+- Password: test
+- Creator
+
+Test User 6:
+- Username: Seat_Potato
+- Password: test
+- User
+
+Test User 7:
+- Username: SirEdwingtonIII
+- Password: test
+- User
+
 ...
 
 

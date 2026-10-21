@@ -24,19 +24,22 @@ class users:
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
             username    TEXT NOT NULL,
             pass_hash   TEXT NOT NULL,
-            image_path  TEXT DEFAULT "default-profile.jpg",
+            image_path  TEXT DEFAULT "_default-profile.png",
             is_creator  INTEGER DEFAULT 0,
             is_admin    INTEGER DEFAULT 0
         )
     """
 
     SEED_DATA = """
-        INSERT INTO users (id, username, pass_hash, is_creator, is_admin)
+        INSERT INTO users (id, username, image_path, pass_hash, is_creator, is_admin)
         VALUES
-            (0, "John Poll", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 1),
-            (1, "Mac's Donald", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 1, 0),
-            (2, "Burgerlover6", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0),
-            (3, "Sauceking", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0)
+            (0, "John Poll", "default-profile.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 1),
+            (1, "Mac's Donald", "f2676cd1bb52_MacsDonaldLogo.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 1, 0),
+            (2, "Burgerlover6", "8ae8482e6cf3_Meal.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0),
+            (3, "Sauceking", "6fdafad96a3c_crown.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0),
+            (4, "Notflix", "de87ab1bdcd7_NotflixLogo.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 1, 0),
+            (5, "Seat_Potato", "88f1612b8214_Potato.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0),
+            (6, "SirEdwingtonIII", "a9961fb25272_Edwington.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0)
     """
 
 class polls:
@@ -58,10 +61,12 @@ class polls:
     """
 
     SEED_DATA = """
-        INSERT INTO polls (id, owner_id, title, subtitle, is_public)
+        INSERT INTO polls (id, owner_id, title, subtitle, image_path, is_public)
         VALUES
-            (0, 1, "Big Matt", "How do we feel about our new 'Big Matt' burger?", 1),
-            (1, 1, "Secret Sauce", "Which Flavour should our new 'Secret Sauce' be?", 0)
+            (0, 1, "Big Matt", "How do we feel about our new 'Big Matt' burger?", "3c9c71124181_burger-png-without-background_JXZO.png", 1),
+            (1, 1, "Secret Sauce", "Which Flavour should our new 'Secret Sauce' be?", "136e785a19fc_SAUCE.png", 0),
+            (2, 4, "New Season Competition", "Which show should get a new season?", NULL, 1),
+            (3, 4, "Subscription", "Should we increase our subscription costs?", 0ee857a361d2_money.png, 0)
     """
 
 class options:
@@ -86,7 +91,12 @@ class options:
             (1, 0, "Hate It."),
             (2, 1, "BBQ"),
             (3, 1, "Pineapple"),
-            (4, 1, "Concrete")
+            (4, 1, "Concrete"),
+            (5, 2, "Wierder Stuff"),
+            (6, 2, "Cephalopod Challenge"),
+            (7, 2, "Fixing Good"),
+            (8, 3, "Yes"),
+            (9, 3, "Super Yes")
     """
 
 class votes:
@@ -110,7 +120,12 @@ class votes:
     SEED_DATA = """
         INSERT INTO votes (poll_id, option_id, user_id)
         VALUES
-            (0, 0, 2)
+            (0, 0, 2),
+            (0, 0, 3),
+            (0, 1, 5),
+            (2, 5, 5),
+            (2, 7, 6),
+            (3, 9, 6)
     """
 
 class participants:
@@ -132,7 +147,10 @@ class participants:
     SEED_DATA = """
         INSERT INTO participants (poll_id, user_id)
         VALUES
-            (1, 3)
+            (1, 3),
+            (1, 6),
+            (3, 5),
+            (3, 6)
     """
 
 class comments:

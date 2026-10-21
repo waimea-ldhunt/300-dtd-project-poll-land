@@ -4,14 +4,15 @@
 ===========================================================*/
 
 :root {
-    --text-col:         #111;
+    --text-col:             #fff;
 
-    --back-col:         #eee;
-    --back-col-panel:   #fff;
+    --back-col:             #000000;
 
-    --border-col:       #355;
+    --primary-col:          #df94ff;
 
-    --accent-col:       #e43;
+    --accent-red:           #ff6666;
+
+    --accent-blue:          #59acff;
 }
 
 
