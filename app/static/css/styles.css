@@ -106,3 +106,25 @@ div.row {
     display: flex;
     justify-content: space-between;
 }
+
+/* Polls --------------------------------------------------*/
+
+section.poll {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+img.hero {
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+}
+
+div.pie {
+    position: relative;
+    width: 400px;
+    height: 600px;
+}

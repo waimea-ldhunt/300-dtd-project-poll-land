@@ -1,4 +1,4 @@
-# Poll Land Project
+# Pollland Project
 
 ## Project Description
 
@@ -11,6 +11,11 @@ The app has the following key features:
 - ...
 
 
+## Live Site
+
+The site is hosted on **Render.com** and can be [accessed live at this link](https://three00-dtd-project-poll-land.onrender.com/)
+
+
 ## Supporting Documents
 
 All documentation is hosted on [Github Pages](https://waimea-ldhunt.github.io/300-dtd-project-poll-land/)
@@ -21,8 +26,9 @@ Task Instructions:
 Project Evidence
 - [Sprint 0: Project Requirements](docs/evidence/sprint-0-requirements.md)
 - [Sprint 1: Prototype Development](docs/evidence/sprint-1-prototype.md)
-- [Sprint 2: MVP Development](docs/evidence/sprint-2-mvp.md)
-- [Sprint 3: Final System Development](docs/evidence/sprint-3-final.md)
+- [Sprint 2: Database](docs/evidence/sprint-2-database.md)
+- [Sprint 3: MVP Development](docs/evidence/sprint-3-mvp.md)
+- [Sprint 4: Final System Development](docs/evidence/sprint-4-final.md)
 - [Review: Project Final Review](docs/evidence/system-review.md)
 
 
@@ -30,42 +36,15 @@ Project Evidence
 
 The following user accounts have been created to demonstrate the features of the system:
 
-Test User 1:
-- Username: John Poll
-- Password: test
-- Admin
-
-Test User 2:
-- Username: Mac's Donald
-- Password: test
-- Creator
-
-Test User 3:
-- Username: Burgerlover6
-- Password: test
-- User
-
-Test User 4:
-- Username: Sauceking
-- Password: test
-- User
-
-Test User 5:
-- Username: Notflix
-- Password: test
-- Creator
-
-Test User 6:
-- Username: Seat_Potato
-- Password: test
-- User
-
-Test User 7:
-- Username: SirEdwingtonIII
-- Password: test
-- User
-
-...
+| Username | Password | Type |
+| -------- | -------- | ---- |
+| John Poll | test | Admin |
+| Mac's Donald | test | Creator |
+| Notflix | test | Creator |
+| Burgerlover6 | test | User |
+| SauceKing | test | User |
+| Seat_Potato | test | User |
+| SirEdwingtonIII | test | User |
 
 
 ## Technologies Used

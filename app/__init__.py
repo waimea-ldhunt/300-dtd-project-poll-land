@@ -640,7 +640,7 @@ def view_profile(id):
         params = (id,)
         user = db.execute(sql, params).fetchone()
 
-        if session["logged_in"] and session["user"]["id"] == id or user["is_creator"] == 1 or session["user"]["is_admin"] == 1:
+        if session and session["user"]["id"] == id or user["is_creator"] == 1 or session["user"]["is_admin"] == 1:
 
             sql = """
                 SELECT *
