@@ -14,7 +14,7 @@ Develop the system until it is fully featured, with a refined UI and it satisfie
 - Perform final, full-system testing
 
 
-## Testing FEATURE NAME HERE
+## Testing Vote Buttons (Change Opacity to show chosen option), (Opacity at 0.3 was too hard to read, upped it to 0.5) 
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
 
@@ -29,7 +29,7 @@ Replace this text with notes any improvements you made as a result of the testin
 **PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
 
 
-## Testing FEATURE NAME HERE
+## Testing Images (Capping Image size), (Profile Images)
 
 Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
 

@@ -32,7 +32,7 @@ app = Flask(__name__)
 def home_page():
     with connect_db() as db:
         sql = """
-            SELECT username
+            SELECT *
             FROM users
         """
         params = ()
@@ -580,14 +580,14 @@ def comment(id):
     with connect_db() as db:
 
         sql = """
-            SELECT creator_id
+            SELECT owner_id
             FROM polls
             WHERE id=?
         """
         params = (id,)
         poll = db.execute(sql, params).fetchone()
 
-        if session["user"]["is_admin"] == 0 and not session["user"]["id"] == poll["creator_id"]:
+        if session["user"]["is_admin"] == 1 and  not session["user"]["id"] == poll["owner_id"]:
             flash("You do not have permission to access this route.","error")
             return redirect(request.referrer or "/")
 

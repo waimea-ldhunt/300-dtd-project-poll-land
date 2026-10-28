@@ -28,7 +28,7 @@
 
     <header>
         <a href="/">
-            Pollland
+            <img src="/static/images/pollland-logo.png" alt="Pollland Logo">
         </a>
 
         <nav>
@@ -51,11 +51,8 @@
                 {% endif %}
 
                 <a href="/profile/{{session.user.id}}">Profile</a>
-                <a href="/logout">Log Out</a>
 
-                <p>{{session.user.username}}</p>
-                {% if session.user.is_admin == 1 %} <p>[admin]</p> {% endif %}
-                {% if session.user.is_creator == 1 %} <p>[creator]</p> {% endif %}
+                <h3>{{session.user.username}}</h3>
 
             {% else  %}
 
@@ -76,6 +73,27 @@
         {% endblock %}
 
     </main>
+
+    <footer>
+    
+        {% if session.logged_in%}
+
+            {% if session.user.is_creator == 1 %}
+
+                <a href="/create"><img src="/static/images/pie.svg"></a>
+
+            {% elif session.user.is_admin == 0 %}
+
+                <a href="/participating"><img src="/static/images/pie.svg"></a>
+
+            {% endif %}
+
+            <a href="/"><img src="/static/images/home.svg"></a>
+            <a href="/profile/{{session.user.id}}"><img src="/static/images/profile.svg"></a>
+
+        {% endif %}
+
+    </footer>
 
 </body>
 

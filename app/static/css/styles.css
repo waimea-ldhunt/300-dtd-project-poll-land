@@ -28,11 +28,12 @@ html {
 
 body {
     min-height: 100dvh;
+    padding-bottom: 4rem;
 }
 
 
 main {
-    max-width: 60rem;
+    max-width: 100rem;
     margin-inline: auto;
     padding: 1rem;
     display: flex;
@@ -41,7 +42,7 @@ main {
 }
 
 
-/* Header & Nav -----------------------------------------------*/
+/* Header, Nav & Footer -----------------------------------------------*/
 
 body > header {
     display: flex;
@@ -50,16 +51,70 @@ body > header {
     justify-content: space-between;
     padding: 1rem;
 
+    a img {
+        height: 4rem;
+        width: auto;
+    }
+
     nav {
         display: flex;
+        align-items: center;
         gap: 1rem;
 
         a {
             color: var(--accent-col);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h3 {
+            color: var(--primary-col);
         }
     }
 }
 
+footer {
+    display: flex;
+    justify-content: center;
+    margin-top: -1rem;
+    position: fixed;
+    bottom: 0;
+    left: 50vw;
+    transform: translateX(-50%);
+    gap: 1rem;
+    background-color: var(--back-col);
+    width: 100vm;
+    padding: 1rem;
+    border-top-right-radius: 1.5rem;
+    border-top-left-radius: 1.5rem;
+    padding-bottom: 0rem;
+
+
+    a {
+        width: 7rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        height: 5rem;
+        background-color: var(--primary-col);
+        color: var(--back-col);
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            margin-top: 0.3em;
+            height: 4rem;
+            width: 4rem;
+        }
+    }
+}
 
 /* Page Headings -----------------------------------------------*/
 
@@ -69,42 +124,118 @@ main > h2 {
     margin-block: 2rem;
 }
 
+/* Misc --------------------------------------------------*/
 
-/* Notes --------------------------------------------------*/
+div.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+span.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Forms --------------------------------------------------*/
 
 form {
+    display: flex;
     width: 25rem;
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
+    gap: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    accent-color: var(--primary-col);
 
     label {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: 2rem;
         margin-bottom: 0.5rem;
+
+
+        div.row {
+            
+            input {
+                padding: 0.5rem;
+                height: 2rem;
+                justify-content: center;
+            }
+
+            button {
+                height: 2rem;
+                padding: 0.5rem;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        label.password input {
+            margin-bottom: 1rem;
+        }
+    }
+
+    input {
+        background-color: var(--primary-col);
+        border-radius: 1rem;
+        border: none;
+        padding-left: 0.5rem;
+        height: 2rem;
+    }
+
+    input::placeholder {
+        color: var(--back-col);
+        font-weight: bold;
+    }
+
+    button {
+        color: var(--back-col);
+        background-color: var(--primary-col);
+        border-radius: 1rem;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 0.5rem;
+        border: none;
+        font-size: 1.5rem;
+        height: 3rem;
     }
 }
 
-
+a.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--back-col);
+    background-color: var(--primary-col);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: max-content;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    height: 2rem;
+    margin-bottom: 1rem;
+}
 
 sub {
-    color: var(--accent-col);
+    color: var(--accent-col); 
 }
 
-button {
-    margin-bottom: 0.5rem;
+/* Profile Card --------------------------------------------------*/
 
-    a.button {
-    text-decoration: none;
-    color: #111;
-    text-align: center;
-    }
-}
-
-div.row {
+div.user_card {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    
+    img.profile {
+        height: 3rem;
+        width: 3rem;
+        border-radius: 1.5rem;
+        object-fit: cover;
+    }
 }
 
 /* Polls --------------------------------------------------*/
@@ -112,19 +243,148 @@ div.row {
 section.poll {
     display: flex;
     justify-content: center;
-    justify-items: center;
+    align-items: center;
     flex-direction: column;
     text-align: center;
+    margin-bottom: 4rem;
+
+    a {
+        color: var(--primary-col);
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+
+    div.options {
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 0.3rem;
+        margin-bottom: 1rem;
+
+        button {
+            color: var(--back-col);
+            background-color: var(--primary-col);
+            opacity: 0.5;
+            border-radius: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem;
+            border: none;
+        }
+
+        a {
+            color: var(--back-col);
+            background-color: var(--primary-col);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            width: max-content;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+        }
+
+        a.voted {
+            opacity: 1;
+        }
+
+        a.not_voted {
+            opacity: 0.5;
+        }
+
+    }
+
+    form div.row {
+        display: flex;
+        justify-content: center;
+        height: 2rem;
+
+        button {
+            flex-grow: 1;
+            height: 2rem;
+            background: none;
+            background-color: var(--back-col);
+            border-radius: 1rem;
+            border: solid;
+            border-width: 0.3rem;
+            border-color: var(--primary-col);
+            color: var(--text-col);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input {
+            flex-grow: 2;
+            background-color: var(--primary-col);
+            border-radius: 1rem;
+            border: none;
+        }
+
+        input::placeholder {
+            color: var(--back-col);
+            font-weight: bold;
+            padding-left: 0.5rem;
+        }
+    }
+}
+
+div.comments {
+    border: solid;
+    border-width: 0.5rem;
+    border-color: var(--text-col);
+    border-radius: 2rem;
+    padding: 1rem;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 img.hero {
     width: 600px;
-    height: 400px;
+    height: auto;
+    max-height: 400px;
     object-fit: cover;
+    margin-top: 1.5rem;
 }
 
 div.pie {
-    position: relative;
     width: 400px;
-    height: 600px;
+    height: 400px;
+    margin: 1.5rem 0rem 1.5rem;
+    position: relative;
+}
+
+/* Profile --------------------------------------------------*/
+
+
+
+/* Mobile --------------------------------------------------*/
+
+@media (min-width: 600px) {
+  nav {
+    display: flex !important;
+  }
+  footer {
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    display: none !important;
+  }
+
+  header {
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  footer {
+    display: flex !important;
+  }
 }

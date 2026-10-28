@@ -8,23 +8,21 @@
 
 {% block content %}
 
-    <h2>Log In</h2>
+    <h1>Log In</h1>
 
     <form method="POST" action="/account/login">
         <label>
-            Username
-            <input name="username" type="text" required>
+            <input name="username" type="text" placeholder="Username" required>
         </label>
 
-        <label>
-            Password
-            <input name="password" type="password" required>
+        <label> 
+            <input name="password" type="password" placeholder="Password" required>
         </label>
 
         <button type="submit" >Log In</button>
     </form>
 
-    <button><a href="/signup" class="button">Sign Up Instead</a></button>
+    <a href="/signup" class="button">Sign Up Instead</a>
 
 {% endblock %}
 

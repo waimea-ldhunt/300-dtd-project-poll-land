@@ -33,7 +33,7 @@ class users:
     SEED_DATA = """
         INSERT INTO users (id, username, image_path, pass_hash, is_creator, is_admin)
         VALUES
-            (0, "John Poll", "default-profile.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 1),
+            (0, "John Poll", "_default-profile.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 1),
             (1, "Mac's Donald", "f2676cd1bb52_MacsDonaldLogo.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 1, 0),
             (2, "Burgerlover6", "8ae8482e6cf3_Meal.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0),
             (3, "Sauceking", "6fdafad96a3c_crown.png", "scrypt:32768:8:1$n7eJTucLbaGmUpAM$c1776374a8d456a6eaf61bccc08db5e1fcc4ff3b3983d364c45ab13074255eeae0a393afb11f99a9fe63fb1d980992ace17a72ba70324523b11e92e36cbe4252", 0, 0),
@@ -66,7 +66,7 @@ class polls:
             (0, 1, "Big Matt", "How do we feel about our new 'Big Matt' burger?", "3c9c71124181_burger-png-without-background_JXZO.png", 1),
             (1, 1, "Secret Sauce", "Which Flavour should our new 'Secret Sauce' be?", "136e785a19fc_SAUCE.png", 0),
             (2, 4, "New Season Competition", "Which show should get a new season?", NULL, 1),
-            (3, 4, "Subscription", "Should we increase our subscription costs?", 0ee857a361d2_money.png, 0)
+            (3, 4, "Subscription", "Should we increase our subscription costs?", "0ee857a361d2_money.png", 0)
     """
 
 class options:

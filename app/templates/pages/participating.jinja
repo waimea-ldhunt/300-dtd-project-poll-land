@@ -8,51 +8,64 @@
 
 {% block content %}
 
-    <h2>Participating</h2>
-
-    <h3>{{participating_polls | count}}</h3>
+    <h1>Participating</h1>
 
     {% if participating_polls %}
 
+      {% if participating_polls | count == 1%}
+        <h2>We have 1 poll for you today!</h2>
+      {% else %}
+        <h2>We have {{participating_polls | count}} polls for you today!</h2>
+      {% endif %}
+
+      
+
       {% for poll in participating_polls%}
 
-        <h3>{{polls[poll.poll_id].title}}</h3>
-        <h4>{{polls[poll.poll_id].subtitle}}</h4>
-        <h5> - {{users[polls[poll.poll_id].owner_id].username}}</h5>
+       <section class="poll">
 
-        {% if polls[poll.poll_id].image_path %}
-            <img src="/static/uploads/{{polls[poll.poll_id].image_path}}">
-        {% endif %}
-
-        {% for option in options %}
-          {% if option.poll_id == polls[poll.poll_id].id %}
-
-            <div class="row">
-
-            {% if (polls[poll.poll_id].id, session.user.id) in vote_groups %}
-
-              {% if option.id == ( votes | selectattr('poll_id', 'eq', polls[poll.poll_id].id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
-                <button><a href="/poll/{{polls[poll.poll_id].id}}/unvote" class="button">{{option.text}} [Remove Vote]</a></button>
-              {% else %}
-                <button><a href="/poll/{{polls[poll.poll_id].id}}/vote/{{option.id}}" class="button">{{option.text}} [Change Vote]</a></button>
-              {% endif%}
-
-            {% else %}
-              <button><a href="/poll/{{polls[poll.poll_id].id}}/vote/{{option.id}}" class="button">{{option.text}}</a></button>          
-            {% endif %}
-
-            </div>
-
+          <h3>{{polls[poll.poll_id].title}}</h3>
+          <h4>{{polls[poll.poll_id].subtitle}}</h4>
+          <div class="user_card">
+              <img class="profile" src="/static/uploads/{{users[polls[poll.poll_id].owner_id].image_path}}">
+              <a href="/profile/{{polls[poll.poll_id].owner_id}}"><h5>{{users[polls[poll.poll_id].owner_id].username}}</h5></a>
+          </div>
+  
+          {% if polls[poll.poll_id].image_path %}
+              <img src="/static/uploads/{{polls[poll.poll_id].image_path}}">
           {% endif %}
-        {% endfor %}
+  
+          <div class="options" id="poll_{{poll.poll_id}}">
+  
+              {% for option in options %}
+                  {% if option.poll_id == poll.poll_id %}
+                      <div class="row">
+                          {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
+                              {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.poll_id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
+                                  <a href="/poll/{{poll.poll_id}}/unvote" class="voted">{{option.text}} [Remove Vote]</a>
+                              {% else %}
+                                  <a href="/poll/{{poll.poll_id}}/vote/{{option.id}}" class="not_voted">{{option.text}} [Change Vote]</a>
+                              {% endif%}
+                          {% else %}
+                              {% if not session.logged_in %}
+                                  <button disabled>{{option.text}}</button>
+                              {% else %}
+                                  <a href="/poll/{{poll.poll_id}}/vote/{{option.id}}">{{option.text}}</a>
+                              {% endif %}
+                          {% endif %}
+                      </div>
+                  {% endif %}
+              {% endfor %}
+          </div>
+
+        </section>
 
       {% endfor %}
 
     {% else %}
 
-      <p> We have no polls for you today.</p>
+      <h2>We have no polls for you today.</h2>
 
     {% endif %}
 
 {% endblock %}
-

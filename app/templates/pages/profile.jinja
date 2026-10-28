@@ -13,12 +13,14 @@
         <h2>Your Profile</h2>
 
         <form method="POST" action="/user/{{user.id}}/update/username">
-            Username
-            <div class="row">
-                <input name="username" type="text" value="{{user.username}}" required>
-
-                <button type="submit">Save</button>
-            </div>
+            <label>
+                Username
+                <div class="row">
+                    <input name="username" type="text" value="{{user.username}}" required>
+    
+                    <button type="submit">Save</button>
+                </div>
+            </label>
         </form>
 
         <p>Profile Image</p>
@@ -28,16 +30,16 @@
         {% endif %}
 
         <form method="POST" action="/user/{{user.id}}/update/image" enctype="multipart/form-data">
-            <div class="row">
+            <label>
                 Change Image
-                <input
-                    name="image"
-                    type="file"
-                    accept="image/png, image/jpeg, image/gif"
-                    required
-                >
-
-                <button type="submit">Save</button>
+                <div class="row">
+                    <input
+                        name="image"
+                        type="file"
+                        accept="image/png, image/jpeg, image/gif"
+                        required
+                    >       
+                    <button type="submit">Save</button>
                 </div>
             </label>
 
@@ -45,16 +47,19 @@
         </form>
 
         <form method="POST" action="/user/{{user.id}}/update/password">
-            <label>
+            <label class="password">
                 Change Password
                 <input name="old_password" type="password" placeholder="Enter Old Password" required>
                 <input name="old_password" type="password" placeholder="Enter New Password" required>
             </label>
+            
 
             <button type="submit" >Update Password</button>
         </form>
 
-        <button><a onclick="return confirm('Are you sure you wish to delete your account?')" href="/user/{{user.id}}/delete">Delete Account</a></button>
+        <a href="/logout" class="button">Log Out</a>
+
+        <a onclick="return confirm('Are you sure you wish to delete your account?')" href="/user/{{user.id}}/delete" class="button">Delete Account</a>
     
     {% elif session.logged_in and session.user.is_admin == 1 and user.is_creator == 0%}
 
@@ -145,4 +150,3 @@
         {% endif %}
     {% endif %}
 {% endblock %}
-

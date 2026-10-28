@@ -8,34 +8,29 @@
 
 {% block content %}
 
-    <h2>Sign Up</h2>
+    <h1>Sign Up</h1>
 
     <form method="POST" action="/account/create">
         <label>
-            <div class="row">
-                Username
-                <sub>*Case Sensitive</sub>
-            </div>
-            <input name="username" type="text" required>
-            
+            <sub>*Case Sensitive</sub>
+            <input name="username" type="text" placeholder="Username" required>
         </label>
 
         <label>
-            Password
-            <input name="password" type="password" required>
+            <input name="password" type="password" placeholder="Password" required>
         </label>
 
         <label>
-            <div class="row">
+            <span class="row">
                 I am a Creator
                 <input name="is_creator" type="checkbox">
-            </div>
+            </span>
         </label>
 
         <button type="submit" >Sign Up</button>
     </form>
 
-    <button><a href="/login" class="button">Log In Instead</a></button>
+    <a href="/login" class="button">Log In Instead</a>
 
 {% endblock %}
 

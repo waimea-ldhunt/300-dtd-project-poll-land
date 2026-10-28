@@ -6,18 +6,20 @@
 
 {% block content %}
 
-    <h2>Pollland</h2>
-
     {% if session.logged_in and session.user.is_admin %}
 
-        <h3>All Polls</h3>
+        <h1>All Polls</h1>
+        <h2>Admin</h2>
 
         {% for poll in polls %}
             <section class="poll">
 
                 <h3>{{poll.title}}</h3>
                 <h4>{{poll.subtitle}}</h4>
-                <a href="/profile/{{poll.owner_id}}"><h5> - {{users[poll.owner_id].username}}</h5></a>
+                <div class="user_card">
+                    <img class="profile" src="/static/uploads/{{users[poll.owner_id].image_path}}">
+                    <a href="/profile/{{poll.owner_id}}"><h5>{{users[poll.owner_id].username}}</h5></a>
+                </div>
 
                 {% if poll.image_path %}
                     <img class="hero" src="/static/uploads/{{poll.image_path}}">
@@ -25,7 +27,7 @@
 
                 {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
                     <div class="pie">
-                      <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}", data-poll_data="{{data[poll.id]}}"></canvas>
+                      <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}" data-poll_data="{{data[poll.id]}}"></canvas>
                     </div>
                 {% else %}
                     <p>This Poll Has No Votes</p>
@@ -34,24 +36,45 @@
                 <a href="/poll/{{poll.id}}/delete">Delete</a>
 
                 {% if poll.is_public == 1 %} <p>Public</p> {% endif %}
-
-                {% for option in options %}
-                    {% if option.poll_id == poll.id %}
-                        <div class="row">
-                            <button disabled>{{option.text}}</button>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-
+                
+                <div class="options" id="poll_{{poll.id}}">
+                    {% for option in options %}
+                        {% if option.poll_id == poll.id %}
+                            <div class="row">
+                                <button class="button" disabled>{{option.text}}</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
 
 
                 {% if  poll.is_public == 1 and comments | selectattr('poll_id', 'eq', poll.id) | list %}
-                    {% for comment in comments %}
-                        {% if comment.poll_id == poll.id %}
-                            <p>{{comment.text}} - <b>{{users[comment.user_id].username}}</b> - <a href="/comment/{{comment.id}}/delete">Delete</a></p>
-                        {% endif %}
-                    {% endfor %}
+
+                    <div class="comments">
+
+                        {% for comment in comments %}
+                            {% if comment.poll_id == poll.id %}
+
+                                <div class="comment">
+                                    <div class="user_card">
+                                        <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}">
+                                        <a href="/profile/{{comment.user_id}}"><h5>{{users[comment.user_id].username}}</h5></a>
+                                        <a href="/comment/{{comment.id}}/delete"><img src="/static/images/bin.svg"></a>
+                                    </div>
+                                    <p>{{comment.text}}</p>
+                                </div>
+                                
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <h5><strong>There are no comments</strong></h5>
+
                 {% endif %}
+                
 
             </section>
         {% endfor %}
@@ -60,54 +83,81 @@
 
     {% elif session.logged_in and session.user.is_creator %}
 
-        <h3>Your Polls</h3>
+        <h1>Your Polls</h1>
+        <h2>Creator</h2>
 
         {% for poll in polls %}
             {% if poll.owner_id == session.user.id %}
                 <section class="poll">
 
-                <h3>{{poll.title}}</h3>
-                <h4>{{poll.subtitle}}</h4>
+                    <h3>{{poll.title}}</h3>
+                    <h4>{{poll.subtitle}}</h4>
 
-                {% if poll.image_path %}
-                    <img class="hero" src="/static/uploads/{{poll.image_path}}">
-                {% endif %}
+                    {% if poll.image_path %}
+                        <img class="hero" src="/static/uploads/{{poll.image_path}}">
+                    {% endif %}
 
-                {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
-                    <div class="pie">
-                      <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}", data-poll_data="{{data[poll.id]}}"></canvas>
-                    </div>
-                {% else %}
-                    <p>This Poll Has No Votes</p>
-                {% endif %}
-
-                <h5><a href="/poll/{{poll.id}}/details">Details</a></h5>
-
-                {% for option in options %}
-                    {% if option.poll_id == poll.id %}
-                        <div class="row">
-                            <button disabled>{{option.text}}</button>
+                    {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
+                        <div class="pie">
+                          <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}" data-poll_data="{{data[poll.id]}}"></canvas>
                         </div>
-                    {% endif %}
-                {% endfor %}
-
-                {% if  poll.is_public == 1 %}
-                    {% if comments | selectattr('poll_id', 'eq', poll.id) | list %}
-                        <h5>Comments</h5> 
-                        {% for comment in comments %}
-                            {% if comment.poll_id == poll.id %}
-                                <p>{{comment.text}} - <b>{{users[comment.user_id].username}}</b>{% if session.logged_in and comment.user_id == session.user.id %}<a href="/comment/{{comment.id}}/delete"> - Delete</a>{% endif %}</p>
-                            {% endif %} 
-                        {% endfor%}
                     {% else %}
-                        <h5>There are no comments</h5>
+                        <p>This Poll Has No Votes</p>
                     {% endif %}
 
-                    <div class="row"><form method="POST" action="/poll/{{poll.id}}/comment">
-                        <input name="text" type="text" placeholder="Add Comment...">
-                        <button type="submit">Comment</button>
-                    </form></div>
-                    
+                    <h5><a href="/poll/{{poll.id}}/details">Details</a></h5>
+
+                    <div class="options" id="poll_{{poll.id}}">
+                        {% for option in options %}
+                            {% if option.poll_id == poll.id %}
+                                <div class="row">
+                                    <button disabled>{{option.text}}</button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    {% if  poll.is_public == 1 %}
+                        {% if comments | selectattr('poll_id', 'eq', poll.id) | list %}
+                            
+                            <h5><strong>Comments</strong></h5> 
+
+                            <div class="comments">
+
+                                {% for comment in comments %}
+                                    {% if comment.poll_id == poll.id %}
+
+                                        <div class="comment">
+
+                                            <div class="user_card">
+                                                <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}">
+                                                <h5>{{users[comment.user_id].username}}</h5>
+                                                <div>
+                                                    {% if session.logged_in and comment.user_id == session.user.id %}
+                                                        <a href="/comment/{{comment.id}}/delete"><img src="/static/images/bin.svg"></a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <p>{{comment.text}}</p>
+
+                                        </div>
+
+                                    {% endif %} 
+                                {% endfor%}
+
+                            </div>
+
+                        {% else %}
+                             <h5><strong>There are no comments</strong></h5>
+                        {% endif %}
+
+                        <form method="POST" action="/poll/{{poll.id}}/comment"><div class="row">
+
+                            <input name="text" type="text" placeholder="Add Comment..." required>
+                            <button type="submit">Comment</button>
+
+                        </div></form>
+
                 {% endif %}
 
                 </section>
@@ -116,7 +166,8 @@
 
     {% else %}
 
-        <h3>Public Polls</h3>
+        <h1>Public Polls</h1>
+        <h2>{{polls | count}} polls</h2>
 
         {% for poll in polls %}
             {% if poll.is_public == 1 %}
@@ -124,7 +175,10 @@
 
                     <h3>{{poll.title}}</h3>
                     <h4>{{poll.subtitle}}</h4>
-                    <a href="/profile/{{poll.owner_id}}"><h5> - {{users[poll.owner_id].username}}</h5></a>
+                    <div class="user_card">
+                        <img class="profile" src="/static/uploads/{{users[poll.owner_id].image_path}}">
+                        <a href="/profile/{{poll.owner_id}}"><h5>{{users[poll.owner_id].username}}</h5></a>
+                    </div>
 
                     {% if poll.image_path %}
                         <img class="hero" src="/static/uploads/{{poll.image_path}}">
@@ -132,64 +186,85 @@
 
                     {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
                         <div class="pie">
-                          <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}", data-poll_data="{{data[poll.id]}}"></canvas>
+                          <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}" data-poll_data="{{data[poll.id]}}"></canvas>
                         </div>
                     {% else %}
                         <p>This Poll Has No Votes</p>
                     {% endif %}
 
-                    {% for option in options %}
-                        {% if option.poll_id == poll.id %}
+                    <div class="options" id="poll_{{poll.id}}">
 
-                            <div class="row">
+                        {% for option in options %}
+                            {% if option.poll_id == poll.id %}
 
-                                {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
+                                <div class="row">
 
-                                    {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
-                                        <button><a href="/poll/{{poll.id}}/unvote" class="button">{{option.text}} [Remove Vote]</a></button>
+                                    {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
+
+                                        {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
+                                            <a href="/poll/{{poll.id}}/unvote" class="voted">{{option.text}} [Remove Vote]</a>
+                                        {% else %}
+                                            <a href="/poll/{{poll.id}}/vote/{{option.id}}" class="not_voted">{{option.text}} [Change Vote]</a>
+                                        {% endif%}
+
                                     {% else %}
-                                        <button><a href="/poll/{{poll.id}}/vote/{{option.id}}" class="button">{{option.text}} [Change Vote]</a></button>
-                                    {% endif%}
 
-                                {% else %}
+                                        {% if not session.logged_in %}
+                                            <button disabled>{{option.text}}</button>
+                                        {% else %}
+                                            <a href="/poll/{{poll.id}}/vote/{{option.id}}">{{option.text}}</a>
+                                        {% endif %}
 
-                                    {% if not session.logged_in %}
-                                        <button disabled>{{option.text}}</button>
-                                    {% else %}
-                                        <button><a href="/poll/{{poll.id}}/vote/{{option.id}}" class="button">{{option.text}}</a></button>
                                     {% endif %}
 
-                                {% endif %}
+                                </div>
 
-                            </div>
+                            {% endif %}
+                        {% endfor %}
 
-                        {% endif %}
-                    {% endfor %}
+                    </div>
 
                     {% if  poll.is_public == 1 %}
                         {% if comments | selectattr('poll_id', 'eq', poll.id) | list %}
 
-                            <h5>Comments</h5> 
+                            <h5><strong>Comments</strong></h5> 
 
-                            {% for comment in comments %}
-                                {% if comment.poll_id == poll.id %}
-                                    <p>{{comment.text}} - <b>{{users[comment.user_id].username}}</b> - {% if session.logged_in and comment.user_id == session.user.id %}<a href="/comment/{{comment.id}}/delete">Delete</a>{% endif %}</p>
-                                {% endif %} 
-                            {% endfor%}
+                            <div class="comments">
+
+                                {% for comment in comments %}
+                                    {% if comment.poll_id == poll.id %}
+
+                                        <div class="comment">
+                                            <div class="user_card">
+                                                <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}">
+                                                <h5>{{users[comment.user_id].username}}</h5>
+                                                {% if session.logged_in and comment.user_id == session.user.id %}
+                                                    <a href="/comment/{{comment.id}}/delete"><img src="/static/images/bin.svg"></a>
+                                                {% endif %}
+                                            </div>
+                                            <p>{{comment.text}}</p>
+                                        </div> 
+                                        
+                                    {% endif %} 
+                                {% endfor%}
+
+                            </div>
 
                         {% else %}
 
-                            <h5>There are no comments</h5>
+                            <h5><strong>There are no comments</strong></h5>
 
                         {% endif %}
 
                         {% if session.logged_in %}
-                            <div class="row"><form method="POST" action="/poll/{{poll.id}}/comment">
+                            <form method="POST" action="/poll/{{poll.id}}/comment"><div class="row">
 
-                                <input name="text" type="text" placeholder="Add Comment...">
+                                <input name="text" type="text" placeholder="Add Comment..." required>
                                 <button type="submit">Comment</button>
 
-                            </form></div>
+                            </div></form>
+                        {% else %}
+                            <a href="/login"><strong>Log In to Comment</strong></a>
                         {% endif %}
 
                     {% endif %}
