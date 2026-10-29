@@ -25,23 +25,24 @@
             <input
                 name="image"
                 type="file"
+                class="file"
                 accept="image/png, image/jpeg, image/gif"
             >
         </label>
         
         <label>
-            <div class="row">
+            <span class="row">
                 Public
                 <input name="is_creator" type="checkbox" id="public_switch">
-            </div>
+            </span>
         </label>
 
         <label>
-            <div class="row">
+            <span class="row">
                 Participants
                 <input name="participants" type="range" min="2" max="{{usercount}}" value="{{usercount}}" id="participant_range">
                 <output id="range_output">{{usercount}}</output>
-            </div>
+            </span>
         </label>
         
         <div id="options_container">

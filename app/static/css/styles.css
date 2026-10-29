@@ -39,6 +39,7 @@ main {
     display: flex;
     align-items: center;
     flex-direction: column;
+    font-weight: bold;
 }
 
 
@@ -78,7 +79,6 @@ body > header {
 }
 
 footer {
-    display: flex;
     justify-content: center;
     margin-top: -1rem;
     position: fixed;
@@ -140,7 +140,8 @@ span.row {
 
 form {
     display: flex;
-    width: 25rem;
+    max-width: 25rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -156,6 +157,7 @@ form {
 
 
         div.row {
+            gap: 0.5rem;
             
             input {
                 padding: 0.5rem;
@@ -171,12 +173,17 @@ form {
             }
         }
 
-        label.password input {
-            margin-bottom: 1rem;
-        }
+        
+    }
+
+    label.password input {
+        margin-bottom:0.5rem;
     }
 
     input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: var(--primary-col);
         border-radius: 1rem;
         border: none;
@@ -189,7 +196,28 @@ form {
         font-weight: bold;
     }
 
+    input.file {
+        background-color: var(--back-col);
+        padding: 0% !important; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input.file::file-selector-button {
+        background-color: var(--primary-col);
+        border-radius: 0.5rem;
+        border: none;
+        font-weight: bold;
+        height: 2rem;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
     button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: var(--back-col);
         background-color: var(--primary-col);
         border-radius: 1rem;
@@ -199,6 +227,14 @@ form {
         border: none;
         font-size: 1.5rem;
         height: 3rem;
+    }
+
+    button.red {
+        background-color: var(--accent-red);
+    }
+
+    button.blue {
+        background-color: var(--accent-blue);
     }
 }
 
@@ -359,9 +395,25 @@ div.pie {
     position: relative;
 }
 
-/* Profile --------------------------------------------------*/
+/* Poll --------------------------------------------------*/
 
+table {
+    opacity: 1;
 
+    th {
+        border: solid;
+        border-color: var(--primary-col);
+        padding: 0.5rem;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+
+    td {
+        border: solid;
+        border-color: var(--text-col);
+        padding: 0.5rem;
+    }
+}
 
 /* Mobile --------------------------------------------------*/
 

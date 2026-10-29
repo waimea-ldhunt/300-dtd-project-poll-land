@@ -15,11 +15,11 @@
         <form method="POST" action="/user/{{user.id}}/update/username">
             <label>
                 Username
-                <div class="row">
+                <span class="row">
                     <input name="username" type="text" value="{{user.username}}" required>
     
                     <button type="submit">Save</button>
-                </div>
+                </span>
             </label>
         </form>
 
@@ -32,15 +32,16 @@
         <form method="POST" action="/user/{{user.id}}/update/image" enctype="multipart/form-data">
             <label>
                 Change Image
-                <div class="row">
+                <span class="row">
                     <input
                         name="image"
                         type="file"
+                        class="file"
                         accept="image/png, image/jpeg, image/gif"
                         required
                     >       
                     <button type="submit">Save</button>
-                </div>
+                </span>
             </label>
 
 

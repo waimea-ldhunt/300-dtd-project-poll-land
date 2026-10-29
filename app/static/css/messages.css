@@ -9,9 +9,9 @@
     --flash-message-accent-col:   #ccc;
     --flash-message-shadow-col:   #0004;
 
-    --flash-error-col:            #c00;
+    --flash-error-col:            #ff6666;
     --flash-warning-col:          #c80;
-    --flash-success-col:          #0c0;
+    --flash-success-col:          #59acff;
 }
 
 
@@ -19,8 +19,12 @@
 
 #flash-messages {
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 5rem;
+    left: 50vw;
+    transform: translateX(-50%);
+    font-weight: bold;
+
+    z-index: 9999;
 
     .flash-message {
         width: 15rem;
@@ -30,8 +34,8 @@
         position: relative;
 
         color: var(--flash-message-text-col);
-        background-color: color-mix(in srgb, var(--flash-message-bg-col), var(--flash-message-accent-col) 20%);
-        border: 1px solid var(--flash-message-border-col);
+        background-color: var(--flash-message-accent-col);
+        border: none;
         box-shadow: 0 0.1rem 0.5rem var(--flash-message-shadow-col);
         border-radius: 0.5rem;
         cursor: pointer;
@@ -53,7 +57,7 @@
             position: absolute;
             top: 0;
             right: 0.5rem;
-            color: var(--flash-message-border-col);
+            color: var(--flash-message-text-col);
         }
     }
 }

@@ -15,7 +15,8 @@ add_button.addEventListener('click', function() {
     new_div.classList.add('row')
 
     const new_button = document.createElement('button');
-    new_button.textContent = 'Remove Option';
+    new_button.textContent = 'Remove';
+    new_button.classList.add("red")
     new_button.addEventListener('click', function() {
         container.removeChild(new_button.parentElement.parentElement)
     });

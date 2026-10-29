@@ -74,9 +74,11 @@
 
     </main>
 
-    <footer>
+    {% if session.logged_in%}
+
+        <footer>
     
-        {% if session.logged_in%}
+        
 
             {% if session.user.is_creator == 1 %}
 
@@ -91,9 +93,11 @@
             <a href="/"><img src="/static/images/home.svg"></a>
             <a href="/profile/{{session.user.id}}"><img src="/static/images/profile.svg"></a>
 
-        {% endif %}
+        
 
-    </footer>
+        </footer>
+
+    {% endif %}
 
 </body>
 

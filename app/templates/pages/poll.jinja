@@ -12,7 +12,7 @@
     <h3>{{poll.subtitle}}</h3>
 
     {% if poll.image_path %}
-        <img src="/static/uploads/{{poll.image_path}}">
+        <img class="hero" src="/static/uploads/{{poll.image_path}}">
     {% endif %}
 
     {% if votes %}
@@ -36,31 +36,39 @@
     {% endif %}
 
     <div class="row">
-        <button><a href="/poll/{{poll.id}}/edit" class="button">Edit</a></button>
-        <button><a href="/poll/{{poll.id}}/delete" class="button">Delete</a></button>
+        <a href="/poll/{{poll.id}}/edit" class="button">Edit</a>
+        <a href="/poll/{{poll.id}}/delete" class="button">Delete</a>
     </div>
 
     <h3>Analysis</h3>
 
     <p>{{votes | count}} participants have voted{% if poll.is_public == 0 %}, out of {{participants | count}} total participants{% endif %}</p>
 
-    {% for option in options %}
-        <div class="row">
-            <h4>{{option.text}}</h4>
-            <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }} Votes</p>
-            {% if votes %}
-                <p>{{ ((votes | selectattr('option_id', 'eq', option.id) | list | count) / (votes | count)) * 100 | round(1) }}%</p>
-            {% else %}
-                <p>0%</p>
-            {% endif %}
-        </div>
-    {% endfor %}
 
-    
+    <table>
+        <tr>
+          <th>Option</th>
+          <th>Votes</th>
+          <th>Percentage</th>
+        </tr>
 
+        {% for option in options %}
+            <tr>
 
-    
-    
+                <td>{{option.text}}</td>
+                <td>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</td>
+
+                {% if votes %}
+                    <td>{{ ((votes | selectattr('option_id', 'eq', option.id) | list | count) / (votes | count)) * 100 | round(1) }}%</td>
+                {% else %}
+                    <td>0%</td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+
+    </table>
+
 
 {% endblock %}
 

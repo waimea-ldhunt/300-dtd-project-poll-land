@@ -30,23 +30,24 @@
             <input
                 name="image"
                 type="file"
+                class="file"
                 accept="image/png, image/jpeg, image/gif"
             >
         </label>
         
         <label>
-            <div class="row">
+            <span class="row">
                 Public
                 <input name="is_creator" type="checkbox" id="public_switch" {% if poll.is_public == 1 %} checked {% endif %} disabled>
-            </div>
+            </span>
         </label>
 
         <label>
-            <div class="row">
+            <span class="row">
                 Participants
                 <input name="participants" type="range" min="2" max="{{participants}}" value="{{participants}}" disabled>
                 <output id="range_output">{{participants}}</output>
-            </div>
+            </span>
         </label>
         
         <div>
@@ -60,7 +61,7 @@
         <button type="submit">Save Changes</button>
     </form>
 
-    <button><a href="/poll/{{poll.id}}/delete">Delete Poll</a></button>
+    <a href="/poll/{{poll.id}}/delete" class="button">Delete Poll</a>
 
 {% endblock %}
 
