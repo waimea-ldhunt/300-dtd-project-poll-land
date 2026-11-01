@@ -2,9 +2,8 @@ const container = document.getElementById('options_container');
 const add_button = document.getElementById('add_option_button');
 
 add_button.addEventListener('click', function() {
-    const input_label = document.createElement('label');
-    // input_label.classList.add()
-    // for later
+    const input_span = document.createElement('span');
+    input_span.classList.add("row")
 
     const new_input = document.createElement('input');
     new_input.name = 'option';
@@ -24,9 +23,9 @@ add_button.addEventListener('click', function() {
     new_div.appendChild(new_input);
     new_div.appendChild(new_button);
 
-    input_label.appendChild(new_div);
+    input_span.appendChild(new_div);
 
-    container.appendChild(input_label);
+    container.appendChild(input_span);
 });
 
 const public_switch = document.getElementById('public_switch');

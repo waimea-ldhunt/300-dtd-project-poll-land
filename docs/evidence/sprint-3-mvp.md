@@ -33,6 +33,8 @@ Testing it with 2 random participants and checking my 'participating' page as on
 
 ![DB Participants Issue](screenshots/sprint3/invalid-participants.png)
 
+> "Thats Cool!" - Aaron
+
 
 ### Changes / Improvements
 

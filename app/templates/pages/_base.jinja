@@ -82,16 +82,16 @@
 
             {% if session.user.is_creator == 1 %}
 
-                <a href="/create"><img src="/static/images/pie.svg"></a>
+                <a href="/create"><img src="/static/images/pie.svg" alt="Create Button"></a>
 
             {% elif session.user.is_admin == 0 %}
 
-                <a href="/participating"><img src="/static/images/pie.svg"></a>
+                <a href="/participating"><img src="/static/images/pie.svg" alt="My Polls Button"></a>
 
             {% endif %}
 
-            <a href="/"><img src="/static/images/home.svg"></a>
-            <a href="/profile/{{session.user.id}}"><img src="/static/images/profile.svg"></a>
+            <a href="/"><img src="/static/images/home.svg" alt="Home Button"></a>
+            <a href="/profile/{{session.user.id}}"><img src="/static/images/profile.svg" alt="Profile Button"></a>
 
         
 

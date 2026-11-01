@@ -11,50 +11,43 @@
     <h2>Edit Poll</h2>
 
     <form method="POST" action="/poll/{{poll.id}}/update"  enctype="multipart/form-data">
-        <label>
-            Title
-            <input name="title" type="text" value="{{poll.title}}" required>
-        </label>
 
-        <label>
-            Subtitle
-            <input name="subtitle" type="text" value="{{poll.subtitle}}">
-        </label>
+        Title
+        <input name="title" type="text" value="{{poll.title}}" required>
+
+        Subtitle
+        <input name="subtitle" type="text" value="{{poll.subtitle}}">
+        
 
         {% if poll.image_path %}
-            <img src="/static/uploads/{{poll.image_path}}">
+            <img src="/static/uploads/{{poll.image_path}}" alt="Poll Hero Image">
         {% endif %}
 
-        <label>
-            Image
-            <input
-                name="image"
-                type="file"
-                class="file"
-                accept="image/png, image/jpeg, image/gif"
-            >
-        </label>
-        
-        <label>
-            <span class="row">
-                Public
-                <input name="is_creator" type="checkbox" id="public_switch" {% if poll.is_public == 1 %} checked {% endif %} disabled>
-            </span>
-        </label>
 
-        <label>
-            <span class="row">
-                Participants
-                <input name="participants" type="range" min="2" max="{{participants}}" value="{{participants}}" disabled>
-                <output id="range_output">{{participants}}</output>
-            </span>
-        </label>
+        Image
+        <input
+            name="image"
+            type="file"
+            class="file"
+            accept="image/png, image/jpeg, image/gif"
+        >
+        
+        <span class="row">
+            Public
+            <input name="is_creator" type="checkbox" id="public_switch" {% if poll.is_public == 1 %} checked {% endif %} disabled>
+        </span>
+
+
+
+        <span class="row">
+            Participants
+            <input name="participants" type="range" min="2" max="{{participants}}" value="{{participants}}" disabled>
+            <output id="range_output">{{participants}}</output>
+        </span>
         
         <div>
             {% for option in options %}
-                <label>
                     <input name="option" type="text" value="{{option.text}}" disabled>
-                </label>
             {% endfor %}
         </div>
 

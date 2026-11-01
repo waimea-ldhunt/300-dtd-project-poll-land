@@ -17,7 +17,7 @@ for (const poll of polls) {
               'rgb(89 172 255)',
               'rgb(254, 214, 106)',
               'rgb(94, 222, 166)'
-              ],
+            ],
             borderWidth: 0,
             borderColor: 'transparent'
           }]

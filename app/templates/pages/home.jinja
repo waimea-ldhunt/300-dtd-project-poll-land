@@ -17,12 +17,12 @@
                 <h3>{{poll.title}}</h3>
                 <h4>{{poll.subtitle}}</h4>
                 <div class="user_card">
-                    <img class="profile" src="/static/uploads/{{users[poll.owner_id].image_path}}">
+                    <img class="profile" src="/static/uploads/{{users[poll.owner_id].image_path}}" alt="{{users[poll.owner_id].username}} Profile Image">
                     <a href="/profile/{{poll.owner_id}}"><h5>{{users[poll.owner_id].username}}</h5></a>
                 </div>
 
                 {% if poll.image_path %}
-                    <img class="hero" src="/static/uploads/{{poll.image_path}}">
+                    <img class="hero" src="/static/uploads/{{poll.image_path}}" alt="Poll Hero Image">
                 {% endif %}
 
                 {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
@@ -57,7 +57,7 @@
 
                                 <div class="comment">
                                     <div class="user_card">
-                                        <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}">
+                                        <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}" alt="{{users[comment.user_id].username}} Profile Image">
                                         <a href="/profile/{{comment.user_id}}"><h5>{{users[comment.user_id].username}}</h5></a>
                                         <a href="/comment/{{comment.id}}/delete"><img src="/static/images/bin.svg"></a>
                                     </div>
@@ -94,7 +94,7 @@
                     <h4>{{poll.subtitle}}</h4>
 
                     {% if poll.image_path %}
-                        <img class="hero" src="/static/uploads/{{poll.image_path}}">
+                        <img class="hero" src="/static/uploads/{{poll.image_path}}" alt="Poll Hero Image">
                     {% endif %}
 
                     {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
@@ -130,7 +130,7 @@
                                         <div class="comment">
 
                                             <div class="user_card">
-                                                <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}">
+                                                <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}" alt="{{users[comment.user_id].username}} Profile Image">
                                                 <h5>{{users[comment.user_id].username}}</h5>
                                                 <div>
                                                     {% if session.logged_in and comment.user_id == session.user.id %}
@@ -169,6 +169,10 @@
         <h1>Public Polls</h1>
         <h2>{{polls | count}} polls</h2>
 
+        {% if not session.logged_in %}
+            <a href="/login"><strong>Log In to Vote / Comment</strong></a>
+        {% endif %}
+
         {% for poll in polls %}
             {% if poll.is_public == 1 %}
                 <section class="poll">
@@ -176,12 +180,12 @@
                     <h3>{{poll.title}}</h3>
                     <h4>{{poll.subtitle}}</h4>
                     <div class="user_card">
-                        <img class="profile" src="/static/uploads/{{users[poll.owner_id].image_path}}">
+                        <img class="profile" src="/static/uploads/{{users[poll.owner_id].image_path}}" alt="{{users[poll.owner_id].username}} Profile Image">
                         <a href="/profile/{{poll.owner_id}}"><h5>{{users[poll.owner_id].username}}</h5></a>
                     </div>
 
                     {% if poll.image_path %}
-                        <img class="hero" src="/static/uploads/{{poll.image_path}}">
+                        <img class="hero" src="/static/uploads/{{poll.image_path}}" alt="Poll Hero Image">
                     {% endif %}
 
                     {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
@@ -202,9 +206,9 @@
                                     {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
 
                                         {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
-                                            <a href="/poll/{{poll.id}}/unvote" class="voted">{{option.text}} [Remove Vote]</a>
+                                            <a href="/poll/{{poll.id}}/unvote" class="voted">{{option.text}}</a>
                                         {% else %}
-                                            <a href="/poll/{{poll.id}}/vote/{{option.id}}" class="not_voted">{{option.text}} [Change Vote]</a>
+                                            <a href="/poll/{{poll.id}}/vote/{{option.id}}" class="not_voted">{{option.text}}</a>
                                         {% endif%}
 
                                     {% else %}
@@ -236,7 +240,7 @@
 
                                         <div class="comment">
                                             <div class="user_card">
-                                                <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}">
+                                                <img class="profile" src="/static/uploads/{{users[comment.user_id].image_path}}" alt="{{users[comment.user_id].username}} Profile Image">
                                                 <h5>{{users[comment.user_id].username}}</h5>
                                                 {% if session.logged_in and comment.user_id == session.user.id %}
                                                     <a href="/comment/{{comment.id}}/delete"><img src="/static/images/bin.svg"></a>
@@ -264,7 +268,7 @@
 
                             </div></form>
                         {% else %}
-                            <a href="/login"><strong>Log In to Comment</strong></a>
+                            <a href="/login"><strong>Log In to Vote / Comment</strong></a>
                         {% endif %}
 
                     {% endif %}

@@ -10,53 +10,46 @@
     <h2>Create Poll</h2>
 
     <form method="POST" action="/poll/create" enctype="multipart/form-data">
-        <label>
-            Title
-            <input name="title" type="text" required>
-        </label>
 
-        <label>
-            Subtitle
-            <input name="subtitle" type="text">
-        </label>
+        Title
+        <input name="title" type="text" required>
 
-        <label>
-            Image
-            <input
-                name="image"
-                type="file"
-                class="file"
-                accept="image/png, image/jpeg, image/gif"
-            >
-        </label>
+
+        Subtitle
+        <input name="subtitle" type="text">
+
+
+
+        Image
+        <input
+            name="image"
+            type="file"
+            class="file"
+            accept="image/png, image/jpeg, image/gif"
+        >
+
         
-        <label>
-            <span class="row">
-                Public
-                <input name="is_creator" type="checkbox" id="public_switch">
-            </span>
-        </label>
 
-        <label>
-            <span class="row">
-                Participants
-                <input name="participants" type="range" min="2" max="{{usercount}}" value="{{usercount}}" id="participant_range">
-                <output id="range_output">{{usercount}}</output>
-            </span>
-        </label>
+        <span class="row">
+            Public
+            <input name="is_creator" type="checkbox" id="public_switch">
+        </span>
+
+        <span class="row">
+            Participants
+            <input name="participants" type="range" min="2" max="{{usercount}}" value="{{usercount}}" id="participant_range">
+            <output id="range_output">{{usercount}}</output>
+        </span>
         
         <div id="options_container">
-            <label>
-                <input name="option" type="text" placeholder="Enter Option Text" required>
-                
-            </label>
 
-            <label>
                 <input name="option" type="text" placeholder="Enter Option Text" required>
-            </label>
+
+                <input name="option" type="text" placeholder="Enter Option Text" required>
+
         </div>
 
-        <button type="button" id="add_option_button">Add Option</button>
+        <button type="button" id="add_option_button" class="blue">Add Option</button>
 
         <button type="submit">Create Poll</button>
     </form>

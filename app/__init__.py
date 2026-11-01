@@ -495,7 +495,7 @@ def delete_poll(id):
         params = (id,)
         poll = db.execute(sql, params).fetchone()
         
-        if not ( session["user"]["is_creator"] == 1 and session["user"]["id"] == poll["creator_id"] ):
+        if not ( session["user"]["is_creator"] == 1 and session["user"]["id"] == poll["owner_id"] ):
             flash("You do not have permission to access this route.","error")
             return redirect(request.referrer or "/")
 
@@ -770,8 +770,10 @@ def update_password(id):
 
         session['user']['pass_hash'] = new_hash
 
-        flash("Password Changed","success")
-        return redirect(f"/profile/{id}")
+        session.clear()
+
+        flash("Password Changed, Please Log In Again","success")
+        return redirect("/")
 
 @login_required
 @app.get("/user/<int:id>/delete")

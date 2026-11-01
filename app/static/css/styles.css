@@ -87,7 +87,6 @@ footer {
     transform: translateX(-50%);
     gap: 1rem;
     background-color: var(--back-col);
-    width: 100vm;
     padding: 1rem;
     border-top-right-radius: 1.5rem;
     border-top-left-radius: 1.5rem;
@@ -129,11 +128,17 @@ main > h2 {
 div.row {
     display: flex;
     justify-content: space-between;
+    gap: 0.5rem;
 }
 
 span.row {
     display: flex;
     justify-content: space-between;
+}
+
+a {
+    color: var(--primary-col);
+    text-decoration: none;
 }
 
 /* Forms --------------------------------------------------*/
@@ -148,36 +153,30 @@ form {
     font-weight: bold;
     margin-bottom: 1rem;
     accent-color: var(--primary-col);
+        
+    span.row {
+        width: 100%;
+        
+        input {
+            padding: 0.5rem;
+            height: 2rem;
+            justify-content: center;
+        }
+        button {
+            height: 2rem;
+            padding: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 
-    label {
+
+    div.password input {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-bottom: 0.5rem;
-
-
-        div.row {
-            gap: 0.5rem;
-            
-            input {
-                padding: 0.5rem;
-                height: 2rem;
-                justify-content: center;
-            }
-
-            button {
-                height: 2rem;
-                padding: 0.5rem;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-
+        width: 100%;
         
-    }
-
-    label.password input {
-        margin-bottom:0.5rem;
     }
 
     input {
@@ -189,6 +188,21 @@ form {
         border: none;
         padding-left: 0.5rem;
         height: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    input:disabled {
+        accent-color: var(--primary-col);
+    }
+
+    input[type="text"] {
+        width: 100%;
+        color: var(--back-col);
+    }
+
+    input[type="password"] {
+        width: 100%;
+        color: var(--back-col);
     }
 
     input::placeholder {
@@ -205,7 +219,7 @@ form {
     }
 
     input.file::file-selector-button {
-        background-color: var(--primary-col);
+        background-color: var(--accent-blue);
         border-radius: 0.5rem;
         border: none;
         font-weight: bold;
@@ -254,8 +268,51 @@ a.button {
     margin-bottom: 1rem;
 }
 
+a.button-red {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--back-col);
+    background-color: var(--accent-red);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: max-content;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    height: 2rem;
+    margin-bottom: 1rem;
+}
+
+a.button-blue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--back-col);
+    background-color: var(--accent-blue);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: max-content;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    height: 2rem;
+    margin-bottom: 1rem;
+}
+
 sub {
     color: var(--accent-col); 
+}
+
+div#options_container {
+    input {
+        margin-bottom: 0.5rem;
+    }
+
+    span {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
 }
 
 /* Profile Card --------------------------------------------------*/

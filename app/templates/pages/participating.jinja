@@ -27,12 +27,12 @@
           <h3>{{polls[poll.poll_id].title}}</h3>
           <h4>{{polls[poll.poll_id].subtitle}}</h4>
           <div class="user_card">
-              <img class="profile" src="/static/uploads/{{users[polls[poll.poll_id].owner_id].image_path}}">
+              <img class="profile" src="/static/uploads/{{users[polls[poll.poll_id].owner_id].image_path}}" alt="{{users[polls[poll.poll_id].owner_id]}} Profile Image">
               <a href="/profile/{{polls[poll.poll_id].owner_id}}"><h5>{{users[polls[poll.poll_id].owner_id].username}}</h5></a>
           </div>
   
           {% if polls[poll.poll_id].image_path %}
-              <img src="/static/uploads/{{polls[poll.poll_id].image_path}}">
+              <img src="/static/uploads/{{polls[poll.poll_id].image_path}}" alt="Poll Hero Image">
           {% endif %}
   
           <div class="options" id="poll_{{poll.poll_id}}">
@@ -42,9 +42,9 @@
                       <div class="row">
                           {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
                               {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.poll_id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
-                                  <a href="/poll/{{poll.poll_id}}/unvote" class="voted">{{option.text}} [Remove Vote]</a>
+                                  <a href="/poll/{{poll.poll_id}}/unvote" class="voted">{{option.text}}</a>
                               {% else %}
-                                  <a href="/poll/{{poll.poll_id}}/vote/{{option.id}}" class="not_voted">{{option.text}} [Change Vote]</a>
+                                  <a href="/poll/{{poll.poll_id}}/vote/{{option.id}}" class="not_voted">{{option.text}}</a>
                               {% endif%}
                           {% else %}
                               {% if not session.logged_in %}
