@@ -1,6 +1,9 @@
 {#=====================================================
-  Login page
-=====================================================#}
+  Participating page
+=======================================================
+  Displays all private polls that the user is
+  participating in (No Commenting)
+-----------------------------------------------------#}
 
 {% extends 'pages/_base.jinja' %}
 
@@ -12,15 +15,14 @@
 
     {% if participating_polls %}
 
-      {% if participating_polls | count == 1%}
-        <h2>We have 1 poll for you today!</h2>
-      {% else %}
-        <h2>We have {{participating_polls | count}} polls for you today!</h2>
-      {% endif %}
+        {# Shows count of polls the user is participating in #}
+        {% if participating_polls | count == 1%}
+            <h2>We have 1 poll for you today!</h2>
+        {% else %}
+            <h2>We have {{participating_polls | count}} polls for you today!</h2>
+        {% endif %}
 
-      
-
-      {% for poll in participating_polls%}
+        {% for poll in participating_polls%}
 
        <section class="poll">
 
@@ -40,18 +42,16 @@
               {% for option in options %}
                   {% if option.poll_id == poll.poll_id %}
                       <div class="row">
-                          {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
+
+                            {# Checks if the user's vote in the poll matches the option id #}
+                            {% if (poll.id, session.user.id) in vote_groups %}
+
                               {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.poll_id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
                                   <a href="/poll/{{poll.poll_id}}/unvote" class="voted">{{option.text}}</a>
                               {% else %}
                                   <a href="/poll/{{poll.poll_id}}/vote/{{option.id}}" class="not_voted">{{option.text}}</a>
                               {% endif%}
-                          {% else %}
-                              {% if not session.logged_in %}
-                                  <button disabled>{{option.text}}</button>
-                              {% else %}
-                                  <a href="/poll/{{poll.poll_id}}/vote/{{option.id}}">{{option.text}}</a>
-                              {% endif %}
+
                           {% endif %}
                       </div>
                   {% endif %}

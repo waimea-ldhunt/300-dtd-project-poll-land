@@ -1,6 +1,13 @@
 {#=====================================================
   Home page
-=====================================================#}
+=======================================================
+  Home page,
+  - Admins see all polls; public and private
+  - Creators see their own polls; public and private
+  - Users can only see public polls on this page
+  - Non Logged in users can only see public polls
+    but not vote or comment
+-----------------------------------------------------#}
 
 {% extends 'pages/_base.jinja' %}
 
@@ -25,6 +32,7 @@
                     <img class="hero" src="/static/uploads/{{poll.image_path}}" alt="Poll Hero Image">
                 {% endif %}
 
+                {# Checks if votes database contains votes from the poll #}
                 {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
                     <div class="pie">
                       <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}" data-poll_data="{{data[poll.id]}}"></canvas>
@@ -47,7 +55,7 @@
                     {% endfor %}
                 </div>
 
-
+                {# Checks if poll is public and comments database contains comments from the poll #}
                 {% if  poll.is_public == 1 and comments | selectattr('poll_id', 'eq', poll.id) | list %}
 
                     <div class="comments">
@@ -97,6 +105,7 @@
                         <img class="hero" src="/static/uploads/{{poll.image_path}}" alt="Poll Hero Image">
                     {% endif %}
 
+                    {# Checks if votes database contains votes from the poll #}
                     {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
                         <div class="pie">
                           <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}" data-poll_data="{{data[poll.id]}}"></canvas>
@@ -118,6 +127,8 @@
                     </div>
 
                     {% if  poll.is_public == 1 %}
+
+                        {# Checks if comments database contains comments from the poll #}
                         {% if comments | selectattr('poll_id', 'eq', poll.id) | list %}
                             
                             <h5><strong>Comments</strong></h5> 
@@ -188,6 +199,7 @@
                         <img class="hero" src="/static/uploads/{{poll.image_path}}" alt="Poll Hero Image">
                     {% endif %}
 
+                    {# Checks if votes database contains votes from the poll #}
                     {% if votes | selectattr('poll_id', 'eq', poll.id) | list %}
                         <div class="pie">
                           <canvas class="pie_chart" data-poll_labels="{{labels[poll.id]}}" data-poll_data="{{data[poll.id]}}"></canvas>
@@ -205,6 +217,7 @@
 
                                     {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
 
+                                        {# Checks if the user's vote in the poll matches the option id #}
                                         {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
                                             <a href="/poll/{{poll.id}}/unvote" class="voted">{{option.text}}</a>
                                         {% else %}
@@ -229,6 +242,8 @@
                     </div>
 
                     {% if  poll.is_public == 1 %}
+
+                        {# Checks if comments database contains comments from the poll #}
                         {% if comments | selectattr('poll_id', 'eq', poll.id) | list %}
 
                             <h5><strong>Comments</strong></h5> 

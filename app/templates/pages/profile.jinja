@@ -1,6 +1,11 @@
 {#=====================================================
-  Login page
-=====================================================#}
+  Profile page
+=======================================================
+  Displays a users profile, if the user themselves
+  views, they can edit their own profile, otherwise
+  users can only view the profiles of other creators
+  (Admins can view any profile)
+-----------------------------------------------------#}
 
 {% extends 'pages/_base.jinja' %}
 
@@ -69,6 +74,7 @@
             <img src="/static/uploads/{{user.image_path}}" alt="{{user.username}} Profile Image">
         {% endif %}
 
+        {# Delete button, confirm prompt on click to prevent user error (UX) #}
         <button><a onclick="return confirm('Are you sure you wish to delete this user?')" href="/user/{{user.id}}/delete">Delete Account</a></button>
 
         {% for comment in comments %}
@@ -109,6 +115,7 @@
 
                             {% if session.logged_in and (poll.id, session.user.id) in vote_groups %}
 
+                                {# Checks if the user's vote in the poll matches the option id #}
                                 {% if option.id == ( votes | selectattr('poll_id', 'eq', poll.id) | list | selectattr('user_id', 'eq', session.user.id) | list | first ).option_id %}
                                     <button><a href="/poll/{{poll.id}}/unvote" class="button">{{option.text}}</a></button>
                                 {% else %}
@@ -125,14 +132,14 @@
 
                             {% endif %}
 
-                            <p>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</p>
-
                         </div>
 
                     {% endif %}
                 {% endfor %}
 
                 {% if  poll.is_public == 1 %}
+
+                    {# If the poll has any comments #}
                     {% if comments | selectattr('poll_id', 'eq', poll.id) | list %}
 
                         <h5>Comments</h5> 

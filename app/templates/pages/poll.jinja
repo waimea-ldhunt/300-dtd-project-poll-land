@@ -1,6 +1,9 @@
-{#=====================================================
-  Login page
-=====================================================#}
+{#====================================================
+  Poll Details page
+=======================================================
+  Displays an individual poll along with the options
+  to edit and delete it
+-----------------------------------------------------#}
 
 {% extends 'pages/_base.jinja' %}
 
@@ -36,6 +39,7 @@
 
     <h3>Analysis</h3>
 
+    {# Gets number of votes and number of total participants if the poll is private #}
     <p>{{votes | count}} participants have voted{% if poll.is_public == 0 %}, out of {{participants | count}} total participants{% endif %}</p>
 
 
@@ -50,8 +54,11 @@
             <tr>
 
                 <td>{{option.text}}</td>
+
+                {# Gets number of votes #}
                 <td>{{ votes | selectattr('option_id', 'eq', option.id) | list | count }}</td>
 
+                {# Gets percentage of votes, else returns "0%" to prevent dividing by zero #}
                 {% if votes %}
                     <td>{{ ((votes | selectattr('option_id', 'eq', option.id) | list | count) / (votes | count)) * 100 | round(1) }}%</td>
                 {% else %}

@@ -26,13 +26,13 @@ app = Flask(__name__)
 #===========================================================
 
 #-----------------------------------------------------------
-# Home page - Show all notes
+# Home page - Show Polls
 #-----------------------------------------------------------
 @app.get("/")
 def home_page():
     with connect_db() as db:
         sql = """
-            SELECT *
+            SELECT id, username, image_path
             FROM users
         """
         params = ()
@@ -73,6 +73,7 @@ def home_page():
         params = ()
         comments = db.execute(sql, params).fetchall()
 
+        # Create array linking poll_id to user_id of each vote, to quickly check wether or not a user has voted on a poll
         vote_groups = [
             (vote["poll_id"], vote["user_id"])
             for vote in votes
@@ -89,6 +90,10 @@ def home_page():
             labels=get_labels(polls, options),
             data=get_data(polls, options, votes)
         )
+
+#-----------------------------------------------------------
+# Participating page - Show Polls that the User is Participating in
+#-----------------------------------------------------------
 
 @app.get("/participating")
 @login_required
@@ -131,6 +136,7 @@ def participating_page():
         params = ()
         votes = db.execute(sql, params).fetchall()
 
+        # Create array linking poll_id to user_id of each vote, to quickly check wether or not a user has voted on a poll
         vote_groups = [
             (vote["poll_id"], vote["user_id"])
             for vote in votes
@@ -147,15 +153,25 @@ def participating_page():
             labels=get_labels(polls, options),
             data=get_data(polls, options, votes)
         )
-    
+
+#-----------------------------------------------------------
+# Login page - Display Login Page
+#-----------------------------------------------------------
 @app.get("/login")
 def login_page():
     return render_template("pages/login.jinja")
 
+#-----------------------------------------------------------
+# Signup page - Display Signup Page
+#-----------------------------------------------------------
 @app.get("/signup")
 def signup_page():
     return render_template("pages/signup.jinja")
 
+#-----------------------------------------------------------
+# Login route - check entered username against database
+# and then check password hash matches before logging in
+#-----------------------------------------------------------
 @app.post("/account/login")
 def login_user():
 
@@ -179,7 +195,8 @@ def login_user():
         if not check_password_hash(user["pass_hash"], password):
             flash("Password Incorrect", "error")
             return redirect("/login")
-        
+
+        # initialise session
         session["logged_in"] = True
         session["user"] = {
             "id":           user["id"],
@@ -192,6 +209,10 @@ def login_user():
         flash("Logged In Successfully", "success")
         return redirect("/")
 
+#-----------------------------------------------------------
+# Create Account route - check entered username against 
+# database and then insert new user into database
+#-----------------------------------------------------------
 @app.post("/account/create")
 def create_user():
 
@@ -228,7 +249,9 @@ def create_user():
         flash(f"Account '{username}' Created, Please Log In", "success")
         return redirect("/login")
 
-
+#-----------------------------------------------------------
+# Logout route - clears session and logs out user
+#-----------------------------------------------------------
 @app.get("/logout")
 @login_required
 def logout_user():
@@ -236,6 +259,10 @@ def logout_user():
     flash("Logged Out Successfully", "success")
     return redirect("/")
 
+#-----------------------------------------------------------
+# Poll Create page - Gets count of non-creator/admin users
+# and then redirects to create page if user is creator
+#-----------------------------------------------------------
 @app.get("/create")
 @login_required
 def create_page():
@@ -257,7 +284,11 @@ def create_page():
     else:
         flash("You do not have permission to access this page.","error")
         return redirect("/")
-    
+
+#-----------------------------------------------------------
+# Poll Create route - Gets count of non-creator/admin users
+# and then redirects to create page if user is creator
+#-----------------------------------------------------------
 @app.post("/poll/create")
 @login_required
 def create_poll():
@@ -305,33 +336,38 @@ def create_poll():
             params = ()
             users = db.execute(sql, params).fetchall()
 
+            # Iterates through each user and adds non creator and non admin users to a list
             filtered_users = []
             for user in users:
                 if user['is_creator'] == 0 and user['is_admin'] == 0:
                     filtered_users.append(user['id'])
 
+            # Gets a random sample of N valid users
             participating_users = random.sample(filtered_users, participants)
 
             for user_id in participating_users:
                 sql = """
                     INSERT INTO participants (user_id, poll_id)
                     VALUES (?,?)
-                    
                 """
                 params = (user_id, poll_id)
                 users = db.execute(sql, params).fetchall
         flash("Poll Created", "success")
         return redirect("/")
-    
+
+#-----------------------------------------------------------
+# Poll Edit page - Gets poll from database and all relevant
+# data to display and then shows the edit page
+#-----------------------------------------------------------
 @app.get("/poll/<int:id>/edit")
 @login_required
 def edit_poll(id):
     with connect_db() as db:
 
         sql = """
-           SELECT *
-           FROM polls
-           WHERE id=?
+            SELECT *
+            FROM polls
+            WHERE id=?
         """
         params = (id,)
         poll = db.execute(sql, params).fetchone()
@@ -363,7 +399,10 @@ def edit_poll(id):
             flash("You do not have permission to access this page.","error")
             return redirect(request.referrer or "/")
 
-
+#-----------------------------------------------------------
+# Poll Details page - Gets poll from database and all 
+# relevant data to display and then shows the details page
+#-----------------------------------------------------------
 @app.get("/poll/<int:id>/details")
 @login_required
 def poll_details(id):
@@ -405,11 +444,13 @@ def poll_details(id):
         params = (id,)
         participants = db.execute(sql, params).fetchall()
 
+        # Formats a list of poll labels (option text) for chart.js
         labels = []
         for option in options:
             if option["poll_id"] == poll["id"]:
                 labels.append(str(option["text"]))
 
+        # Formats a list of poll votes for chart.js
         data = []
         for option in options:
             if option["poll_id"] == poll["id"]:
@@ -418,9 +459,6 @@ def poll_details(id):
                     if vote["option_id"] == option["id"]:
                         count += 1
                 data.append(count)
-
-        print(data)
-        print(labels)
 
         return render_template(
             "pages/poll.jinja",
@@ -432,6 +470,10 @@ def poll_details(id):
             data=data
         )
 
+#-----------------------------------------------------------
+# Poll Update route - Get data from edit form and update
+# the poll in the database
+#-----------------------------------------------------------
 @app.post("/poll/<int:id>/update")
 @login_required
 def update_poll(id):
@@ -482,6 +524,11 @@ def update_poll(id):
                 flash("Poll Updated", "success") 
                 return redirect(f"/poll/{id}/details")
 
+#-----------------------------------------------------------
+# Poll Delete route - Checks the user is the owner of the
+# poll and then deletes the poll and all references
+# from each database including the image
+#-----------------------------------------------------------
 @app.get("/poll/<int:id>/delete")
 @login_required
 def delete_poll(id):
@@ -522,7 +569,12 @@ def delete_poll(id):
 
         flash("Poll Deleted", "success") 
         return redirect("/")
-    
+
+#-----------------------------------------------------------
+# Vote route - Checks user is not creator or admin,
+# removes any of the users previous votes on the same
+# poll and then adds the vote to the database
+#-----------------------------------------------------------
 @app.get("/poll/<int:poll_id>/vote/<int:option_id>")
 @login_required
 def vote(poll_id, option_id):
@@ -551,6 +603,10 @@ def vote(poll_id, option_id):
         flash(f"Vote Added", "success")
         return redirect(request.referrer or "/")
 
+#-----------------------------------------------------------
+# Poll Unvote route - Checks user is not creator or admin,
+# then deletes their vote from the database
+#-----------------------------------------------------------
 @app.get("/poll/<int:poll_id>/unvote")
 @login_required
 def revoke_vote(poll_id):
@@ -571,6 +627,11 @@ def revoke_vote(poll_id):
         flash(f"Vote Removed", "success")
         return redirect(request.referrer or "/")
 
+#-----------------------------------------------------------
+# Comment route - Checks user is not admin or other
+# creator, Gets text from form and adds it to
+# the comments database
+#-----------------------------------------------------------
 @app.post("/poll/<int:id>/comment")
 @login_required
 def comment(id):
@@ -601,6 +662,10 @@ def comment(id):
         flash(f"Comment Added", "success")
         return redirect(request.referrer or "/")
 
+#-----------------------------------------------------------
+# Comment Delete route - Checks user is not admin or other
+# creator, then deletes comment entry from database
+#-----------------------------------------------------------
 @app.get("/comment/<int:id>/delete")
 @login_required
 def delete_comment(id):
@@ -628,6 +693,10 @@ def delete_comment(id):
         flash(f"Comment Deleted", "success")
         return redirect(request.referrer or "/")
 
+#-----------------------------------------------------------
+# Profile page - Checks if profile is users or a creator
+# profile, then gathers data and opens profile page 
+#-----------------------------------------------------------
 @app.get("/profile/<int:id>")
 def view_profile(id):
     with connect_db() as db:
@@ -693,6 +762,10 @@ def view_profile(id):
             flash("You do not have permission to view this profile","error")
             return redirect(request.referrer or "/")
 
+#-----------------------------------------------------------
+# Update Username route - Gets updated username from
+# form and updates username in user database
+#-----------------------------------------------------------
 @app.post("/user/<int:id>/update/username")
 @login_required
 def update_profile(id):
@@ -713,6 +786,10 @@ def update_profile(id):
         flash(f"Profile updated", "success")
         return redirect(f"/profile/{id}")
 
+#-----------------------------------------------------------
+# Update Image route - Gets updated image from
+# form and updates image in user database
+#-----------------------------------------------------------
 @app.post("/user/<int:id>/update/image")
 @login_required
 def update_profile_image(id):
@@ -737,7 +814,11 @@ def update_profile_image(id):
         flash(f"Profile Picture Updated", "success")
         return redirect(f"/profile/{id}")
 
-
+#-----------------------------------------------------------
+# Update Password route - Gets passwords from form and
+# checks old password hash with database and if they match,
+# hash and updated the new password
+#-----------------------------------------------------------
 @app.post("/user/<int:id>/update/password")
 @login_required
 def update_password(id):
@@ -775,6 +856,12 @@ def update_password(id):
         flash("Password Changed, Please Log In Again","success")
         return redirect("/")
 
+#-----------------------------------------------------------
+# User Delete route - Checks the logged in user is the
+# actual user or is an admin and then deletes the user
+# and all references including user profile image
+# (ignores deleting default profile picture)
+#-----------------------------------------------------------
 @login_required
 @app.get("/user/<int:id>/delete")
 def delete_user(id):
@@ -808,6 +895,11 @@ def delete_user(id):
         flash("Account Deleted","success")
         return redirect("/")
 
+#-----------------------------------------------------------
+# Save Image function - Gets file and creates a unique
+# filename and saves the image in the uploads folder
+# under that filename
+#-----------------------------------------------------------
 def save_image(image):
     filename = secure_filename(image.filename)
     random_prefix = uuid.uuid4().hex[:12]
@@ -819,11 +911,19 @@ def save_image(image):
 
     return unique_filename
 
+#-----------------------------------------------------------
+# Delete Image function - Finds file from uploads folder
+# using unique filename and deletes it
+#-----------------------------------------------------------
 def delete_image(image_path):
     filepath = os.path.join(UPLOAD_FOLDER, image_path)
     if os.path.exists(filepath):
         os.remove(filepath)
 
+#-----------------------------------------------------------
+# Get Labels function - Formats and orders poll options
+# (text) in the format required for chart.js
+#-----------------------------------------------------------
 def get_labels(polls, options):
     labels = []
     for poll in polls:
@@ -834,6 +934,10 @@ def get_labels(polls, options):
         labels.append(poll_labels)
     return labels
 
+#-----------------------------------------------------------
+# Get Data function - Formats and orders votes in the
+# format required for chart.js
+#-----------------------------------------------------------
 def get_data(polls, options, votes):
     data = []
     for poll in polls:
@@ -847,6 +951,7 @@ def get_data(polls, options, votes):
                 poll_data.append(count)
         data.append(poll_data)
     return data
+
 #===========================================================
 # Configure the app
 #===========================================================
@@ -857,4 +962,4 @@ init_text_filters(app)
 init_date_filters(app)
 init_error_handlers(app)
 init_database()
-register_commands(app)      
+register_commands(app)

@@ -2,11 +2,11 @@
 
 ## Identified Problem or Need
 
-Large scale polling/surveying is difficult and requires a lot of effort to collect the desired data. There are no central services for managaging large scale polls.
+Large scale polling/surveying is difficult and requires a lot of effort to collect the desired data. There are no central services for managing large scale polls.
 
 ## End-User Requirements
 
-Creators need to be able to easily create and manage polls, and be able to send them out to a large randomised group of users (Or everyone).
+Creators need to be able to easily create and manage polls, and be able to send them out to a large randomized group of users (Or everyone).
 
 Users need to be able to see the polls they are participating in, and be able to vote and comment on them.
 
@@ -139,12 +139,16 @@ These considerations will improve my users experience.
 
 ## Clear User Flows
 
-Replace this text with a clear explanation of what the principle means.
+Clear User Flows mean that the system follows a clear and logical flow to support the goals of the users and reduce confusion and streamline the utilization of the system.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the principle is relevant to this particular project.
+Because my system is designed for a positive user experience, the layout and flow of my system should always stay clear and consistent this would mean that my users have an easier time utilizing my system and cant easily go off track or use it in a way that they did not intend.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this principle.
+My system should ensure that the layout creates a clear and quality user flow, I will do this by making sure that:
+ - The buttons are clear and guide the user correctly.
+ - Language used is consistent
+ - All identical features look and work the same across the system
+These considerations will improve my users experience.
