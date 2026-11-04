@@ -6,14 +6,6 @@
 #----------------------------------------------------------------------------
 # Table definitions
 #----------------------------------------------------------------------------
-# Define your tables with a name, a schema and optional seed/sample data,
-# using this format, and then add the tables to the Table Registry below:
-#
-# class TableName:
-#     NAME      = "name"
-#     SCHEMA    = "CREATE TABLE name (...)"
-#     SEED_DATA = "INSERT INTO name (...)" or None
-#----------------------------------------------------------------------------
 
 class users:
 
@@ -87,16 +79,16 @@ class options:
     SEED_DATA = """
         INSERT INTO options (id, poll_id, text)
         VALUES
-            (0, 0, "Love It!"),
-            (1, 0, "Hate It."),
-            (2, 1, "BBQ"),
+            (0, 0, "I Love It!"),
+            (1, 0, "I Hate It."),
+            (2, 1, "Smokey BBQ"),
             (3, 1, "Pineapple"),
-            (4, 1, "Concrete"),
+            (4, 1, "Wet Concrete"),
             (5, 2, "Wierder Stuff"),
             (6, 2, "Cephalopod Challenge"),
             (7, 2, "Fixing Good"),
-            (8, 3, "Yes"),
-            (9, 3, "Super Yes")
+            (8, 3, "Yes Please"),
+            (9, 3, "SUPER YES")
     """
 
 class votes:
@@ -180,17 +172,6 @@ class comments:
 #----------------------------------------------------------------------------
 # Table registry
 #----------------------------------------------------------------------------
-# Register all of your tables by adding them to the TABLES list here:
-#
-# TABLES = [
-#     Table1Name,
-#     Table2Name,
-#     etc.
-# ]
-#
-# Note: The table order is important - Create the tables that have
-# foreign keys *after* the tables they link to have been created
-#----------------------------------------------------------------------------
 
 TABLES = [
     users,
@@ -200,4 +181,3 @@ TABLES = [
     participants,
     comments,
 ]
-

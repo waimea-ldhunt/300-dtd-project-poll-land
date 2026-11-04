@@ -364,7 +364,7 @@ section.poll {
 
         display: flex;
         align-items: center;
-        flex-direction: column;
+        flex-direction: row;
         gap: 0.3rem;
         margin-bottom: var(--standard-spacing-large);
 
@@ -492,6 +492,10 @@ table {
   footer {
     display: none !important;
   }
+
+  div.options {
+    flex-direction: row !important;
+  }
 }
 
 @media (max-width: 600px) {
@@ -506,5 +510,9 @@ table {
 
   footer {
     display: flex !important;
+  }
+
+  div.options {
+    flex-direction: column !important;
   }
 }

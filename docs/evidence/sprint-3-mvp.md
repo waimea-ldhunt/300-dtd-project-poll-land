@@ -78,10 +78,9 @@ I tested this system with my end user and they thought it worked well but they s
 
 I added the comment code from the users section so that the creators are able to comment on their own posts.
 
-![Alt text](screenshots/sprint3/comment-html.png)
+![Comment Section HTML](screenshots/sprint3/comment-html.png)
 
 ![Display of Changed Home Page (Creator)](screenshots/sprint3/home-creator-updated.png)
-
 
 
 ## Testing Profiles
@@ -89,19 +88,19 @@ I added the comment code from the users section so that the creators are able to
 Testing my dynamic profile page in all of its different states;
  - If the user is viewing their own profile, show it editable.
 
-![Alt text](screenshots/sprint3/own-profile.png)
+![Own Profile Page](screenshots/sprint3/own-profile.png)
 
  - If the user is viewing another users profile, block them.
 
-![Alt text](screenshots/sprint3/invalid-permissions.png)
+![Invalid Profile Veiw Permissions](screenshots/sprint3/invalid-permissions.png)
 
  - If the user is viewing a creators profile, show them their public facing polls and details.
 
-![Alt text](screenshots/sprint3/creators-profile.png)
+![Other Creator Profile View](screenshots/sprint3/creators-profile.png)
 
  - If the user is an admin, always allow them to edit a profile.
 
-![Alt text](screenshots/sprint3/admin-view-error.png)
+![Admin Profile View](screenshots/sprint3/admin-view-error.png)
 
 All of these outcomes except the admin view work correctly with the right checks and displaying. The admin view does not display correctly when looking at a user profile, though it does work when viewing a creator profile.
 
@@ -109,22 +108,22 @@ All of these outcomes except the admin view work correctly with the right checks
 
 I fixed the admin view for viewing regular users by adding an extra section to the template for admins viewing a regular user profile.
 
-![alt text](screenshots/sprint3/admin-profile-view.png)
+![Improved Admin View](screenshots/sprint3/admin-profile-view.png)
 
 Testing this with my end user they suggested that I display the users comments to the admin for moderation.
 
-![alt text](screenshots/sprint3/admin-profile-view-updated.png)
+![Improved Admin View + Comments](screenshots/sprint3/admin-profile-view-updated.png)
 
 
 ## Testing Images
 
 I added an images system for both the users and polls. Users can edit their profile pictures once they have created an account and creators are able to add images to their polls.
 
-![Alt text](screenshots/sprint3/poll-image-test.gif)
+![Poll Creation GIF (Image testing)](screenshots/sprint3/poll-image-test.gif)
 
-![Alt text](screenshots/sprint3/poll-image-route.png)
+![Create Poll Image Route](screenshots/sprint3/poll-image-route.png)
 
-![Alt text](screenshots/sprint3/image-insertion.png)
+![Image DB Insertion](screenshots/sprint3/image-insertion.png)
 
 The Image is correctly added to the uploads folder and the database, displaying correctly on the website.
 
@@ -132,9 +131,9 @@ The Image is correctly added to the uploads folder and the database, displaying 
 
 I also tested this again with my end-user on the users accounts and it worked as intended, but my end-user suggested I add a default image to the user profile. I added this to my config and tested it by creating a new user.
 
-![Alt text](screenshots/sprint3/table-default.png)
+![Default Profile Seed Data](screenshots/sprint3/table-default.png)
 
-![Alt text](screenshots/sprint3/default-image-test.gif)
+![Default Profile Test](screenshots/sprint3/default-image-test.gif)
 
 Testing this new addition it works correctly and my end-user liked the change.
 
@@ -147,11 +146,11 @@ The editing poll page is almost identical to the create poll form however the ed
 
 Editing Poll
 
-![alt text](screenshots/sprint3/edit-poll-test.gif)
+![Edit Poll GIF](screenshots/sprint3/edit-poll-test.gif)
 
 Editing User
 
-![alt text](screenshots/sprint3/edit-user-test.gif)
+![Edit User GIF](screenshots/sprint3/edit-user-test.gif)
 
 Both work well and testing them with the end-user they were happy with the options.
 
@@ -163,31 +162,29 @@ Deleting both requires a SQL query to remove the related entries from the databa
 
 Deleting Polls
 
-![alt text](screenshots/sprint3/delete-poll-test.gif)
+![Delete Poll GIF](screenshots/sprint3/delete-poll-test.gif)
 
-![alt text](screenshots/sprint3/poll-delete-terminal.png)
+![Deletion Console Output](screenshots/sprint3/poll-delete-terminal.png)
 
 Deleting Polls works as intended with each relevant entry removed from the database.
 
 Deleting Users
 
-![alt text](screenshots/sprint3/delete-user-test.gif)
+![Delete User GIF](screenshots/sprint3/delete-user-test.gif)
 
 Deleting the user works correctly, but when testing deleting a profile where the profile image was the default, the script would delete the image from the folder and cause issues for most of the other users.
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
-
-![alt text](screenshots/sprint3/delete-image-fix.png)
+![Delete Image Fixed GIF](screenshots/sprint3/delete-image-fix.png)
 
 And testing this again it works correctly without removing the default profile image from the database. Talking this change through with my user they thought I should add a confirmation popup before deleting the user to prevent accidents.
 
-![alt text](screenshots/sprint3/delete-user-fix.gif)
+![Delete User Fixed GIF](screenshots/sprint3/delete-user-fix.gif)
 
 Going through this again with my end-user they thought the change worked well.
 
-Maybe add something about UX/Heuristics.
+Implementing this improves the systems handling of user errors which in turn improves the general *User Experience*
 
 
 ## Testing Breaking In
@@ -198,8 +195,9 @@ Throughout my testing I have noticed that many of my routes and pages can easily
 
 I added checks to each of the relevant routes to ensure security and no errors occur, such as:
 
-![alt text](screenshots/sprint3/creator-confirm.png)
+![User Check Code](screenshots/sprint3/creator-confirm.png)
 
+I did this to ensure that the system was secure and private for the users to prevent data leaks and ensure user safety, contributing to a stronger *User Experience*.
 
 ## Sprint Review
 

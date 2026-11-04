@@ -54,7 +54,7 @@ Use complex techniques to develop an informed database means **all the criteria 
 2. You should structure, organise and query your data logically:
    - [x] Your tables should be **normalised** (no repeating data)
    - [x] Your fields have the **appropriate data type**, **defaults**, etc.
-   - [ ? ] Your database **queries are well-written and efficient**
+   - [x] Your database **queries are well-written and efficient**
 
 
 ## Excellence Criteria
@@ -71,8 +71,8 @@ Use complex techniques to develop a refined database means **all of the criteria
    - [x] You have **effectively used tools** like DrawSQL, Figma, VS Code, Turso SQL editor, etc. to help develop the outcome
 
 3. You present the data from the database effectively for the purpose and end users:
-   - [ ] Data is displayed in ways that make its **meaning clear** (e.g. using colour)
-   - [ ] Data is **displayed in interesting and creative ways** to meet the needs of the user and satisfy the system requirements
+   - [x] Data is displayed in ways that make its **meaning clear** (e.g. using colour)
+   - [x] Data is **displayed in interesting and creative ways** to meet the needs of the user and satisfy the system requirements
 
 
 
@@ -104,7 +104,7 @@ Use complex techniques to develop a digital media outcome means that, taking int
 
 4. You have applied user experience (UX) principles relevant to the purpose of your system:
    - [x] You have **identified key UX principles** that are relevant
-   - [ ] You **applied these UX principles** in your system's design and development
+   - [x] You **applied these UX principles** in your system's design and development
 
 5. You need to explain and address relevant implications:
    - [x] Identify the **implications most relevant** to your project
@@ -125,12 +125,12 @@ Use complex techniques to develop an informed digital media outcome means **all 
    - [x] Show the **improvements made** as a result
 
 2. You have used testing tools to help improve your web site:
-   - [ ] You have used **code validation** tools for generated HTML and CSS
+   - [x] You have used **code validation** tools for generated HTML and CSS
    - [x] You have **fixed any issues** identified
 
 3. You have applied user experience (UX) principles to improve the quality of your web site:
-   - [ ] Show evidence that you **tested your system against identified UX principles** during development
-   - [ ] Show the **improvements made** as a result
+   - [x] Show evidence that you **tested your system against identified UX principles** during development
+   - [x] Show the **improvements made** as a result
 
 
 ## Excellence Criteria
@@ -138,15 +138,15 @@ Use complex techniques to develop an informed digital media outcome means **all 
 Use complex techniques to develop a refined digital media outcome means **all of the criteria for Merit**, plus:
 
 1. You have made iterative improvements throughout the design, development and testing process:
-   - [ ] You have refined features of the web site (layout, theme, etc.) over **multiple iterations**
-   - [ ] Each iteration is **clearly documented**, showing testing and resulting refinements
+   - [x] You have refined features of the web site (layout, theme, etc.) over **multiple iterations**
+   - [x] Each iteration is **clearly documented**, showing testing and resulting refinements
 
 2. You have used efficient tools and techniques in the web site's production:
    - [x] You have effectively used **version control**
    - [x] You git **commits are regular with descriptive commit messages**
    - [x] You have **effectively used tools** like DrawSQL, Figma, VS Code, Turso SQL editor, etc. to help develop the outcome
    - [x] You have made good use of **templates** (Jinja) to organise and structure content
-   - [ ] Your code is **commented** as needed
+   - [x] Your code is **commented** as needed
    - [x] You have **optimised media assets** (e.g. image sizing)
 
 

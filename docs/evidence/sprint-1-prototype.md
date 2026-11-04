@@ -25,7 +25,7 @@ Develop a design for the database and a UI prototype that simulates the key func
 
 Replace this text with notes regarding the DB design.
 
-![DB Design](screenshots/database.png)
+![DB Design](screenshots/sprint1/database.png)
 
 
 ### Required Data Input

@@ -2,13 +2,15 @@
 
 ## Project Description
 
-This is an app that ...
+This is an app that allows creators to make large scale polls for samles of users or publicly.
 
 The app has the following key features:
-- Feature one
-- Feature two
-- Feature three
-- ...
+ - User Accounts, (Participant, Creator and Admin)
+ - Creators can create public or private polls
+ - Creators can see an breakdown of their poll results.
+ - Users can vote and comment on public polls.
+ - Users have a feed for private polls they are invited to where they can vote.
+ - Admins can mad
 
 
 ## Live Site
