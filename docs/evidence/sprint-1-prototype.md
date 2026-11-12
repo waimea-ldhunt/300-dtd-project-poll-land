@@ -23,10 +23,11 @@ Develop a design for the database and a UI prototype that simulates the key func
 
 ## Initial Database Design
 
-Replace this text with notes regarding the DB design.
+![Initial DB Design](screenshots/sprint2/database.png)
 
-![DB Design](screenshots/sprint1/database.png)
+Showing my end-user this initial design, they suggested I add a Comments table, for people to comment on public polls.
 
+![Improved DB Design](screenshots/sprint2/database-v2.png)
 
 ### Required Data Input
 
